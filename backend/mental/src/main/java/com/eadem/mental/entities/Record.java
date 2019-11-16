@@ -38,7 +38,6 @@ public class Record {
       record.title = rs.getString("title");
       return record;
     }
-
   }
 
   public static Record getById(UUID id) {
@@ -106,6 +105,24 @@ public class Record {
     } catch (DataAccessException e) {
       e.printStackTrace();
       return null;
+    }
+  }
+
+  public static boolean delete(UUID recordid) {
+    try {
+      jdbcTemplate.update(
+    "DELETE FROM saved "
+        + "WHERE recordid = ?",
+        recordid
+      );
+      return jdbcTemplate.update(
+    "DELETE FROM record "
+        + "WHERE recordid = ?",
+        recordid
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
     }
   }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import com.eadem.mental.wrappers.UserDescription;
+import com.eadem.mental.wrappers.UserName;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,6 +78,13 @@ public class MentalController {
     return Users.updateDescription(userDescription);
   }
 
+  @PostMapping("/users/updateName")
+  public boolean UpdateName(
+      @RequestBody UserName userName
+  ) {
+    return Users.updateUserName(userName);
+  }
+
   @PostMapping("/saved/create")
   public boolean createSaved(
       @RequestBody Saved saved
@@ -118,6 +126,34 @@ public class MentalController {
     return false;
   }
 
+  @PostMapping("/record/likeIncrease")
+  public boolean increaseLikeCounter(
+          @RequestBody UUID recordid
+  ) {
+    return Record.increaseLikeCounter(recordid);
+  }
+
+  @PostMapping("/record/getTop")
+  public List<Record> getTop(
+          @RequestBody int count
+  ) {
+    return Record.getTop(count);
+  }
+
+  @PostMapping("/record/getById")
+  public Record GetRecord(
+      @RequestBody UUID recordid
+  ) {
+    return Record.getById(recordid);
+  }
+
+  @PostMapping("/record/deleteById")
+  public boolean DeleteRecord(
+    @RequestBody UUID recordid
+  ) {
+    return Record.delete(recordid);
+  }
+
   @GetMapping(
       value = "/file/{filesid}",
       produces = MediaType.IMAGE_PNG_VALUE
@@ -130,20 +166,6 @@ public class MentalController {
       return file.data;
     }
     return null;
-  }
-
-  @PostMapping("/record/likeIncrease")
-  public boolean increaseLikeCounter(
-      @RequestBody UUID recordid
-  ) {
-      return Record.increaseLikeCounter(recordid);
-  }
-
-  @PostMapping("/record/getTop")
-  public List<Record> getTop(
-      @RequestBody int count
-  ) {
-    return Record.getTop(count);
   }
 
   @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
