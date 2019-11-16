@@ -20,7 +20,7 @@ export const getSavedRecords = (userId) => (dispatch) => {
     API.getSavedRecords(
         userId,
         (res) => {
-            console.log(res);
+            console.log('API response for saved records', res);
             if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_SAVED_RECORDS', payload: res});
             else dispatch({type: 'SET_SAVED_RECORDS', payload: []});
         }
@@ -31,7 +31,7 @@ export const getMyRecords = (userId) => (dispatch) => {
     API.getUserRecords(
         userId,
         (res) => {
-            console.log(res);
+            console.log('API response for user records', res);
             if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_MY_RECORDS', payload: res});
             else dispatch({type: 'SET_MY_RECORDS', payload: []});
         }
