@@ -18,6 +18,7 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 
 import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
+import com.reactnativecommunity.rctaudiotoolkit.AudioPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -42,6 +43,7 @@ public class MainApplication extends NavigationApplication {
                                 return Arrays.<ReactPackage>asList(
                                     new AsyncStoragePackage(),
                                     new RNUUIDGeneratorPackage()
+                                    // new AudioPackage()
                                 );
             }
 
