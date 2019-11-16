@@ -4,9 +4,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
+import {connect} from 'react-redux'
 
 
-const Saved = () => {
+const Saved = (props) => {
+    console.log(props.savedRecords)
+    console.log(props.savedRecords.length)
+
     return (
         <>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
@@ -16,16 +20,22 @@ const Saved = () => {
                             Saved Recordings
                         </Text>
                     </View>
-                    <RecordItem recordName="I love life" recordAuthor="Seppo" />
-                    <RecordItem recordName="Made my day" recordAuthor="Arttu" />
-                    <RecordItem recordName="Beer is good" recordAuthor="Maija" />
-                    <RecordItem recordName="Elämä on parasta huumetta" recordAuthor="Sirpa" />
-                    <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
+                    {
+                        props.savedRecords.map((recordItem) => (
+                            <RecordItem key={recordItem.record.recordid} recordName={recordItem.record.title} recordAuthor={recordItem.user.username} />
+                        ))
+                    }
                 </View>
             </KeyboardAwareScrollView>
         </>
     );
 };
+
+const mapStateToProps = state => ({
+    savedRecords: state.savedRecords
+});
+  
+export default connect(mapStateToProps, {})(Saved);
 
 const styles = StyleSheet.create({
     row: {
@@ -70,5 +80,3 @@ const styles = StyleSheet.create({
         fontSize: 28
     }
 });
-
-export default Saved;
