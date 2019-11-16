@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, TextInput } from 'react-native-paper';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
@@ -8,7 +9,7 @@ import colors from "../../assets/colors";
 const App = () => {
     return (
         <>
-            <SafeAreaView>
+            <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
                 <View style={styles.body}>
                     <View style={{ flexDirection: 'row', marginBottom: 10 }}>
                         <TextInput style={{ backgroundColor: colors.background }}></TextInput>
@@ -16,9 +17,9 @@ const App = () => {
 
                     <Button icon="microphone" mode="contained" color={colors.buttonDefault} uppercase={false} onPress={() => console.log('Record')}>
                         Share
-                        </Button>
+                </Button>
                 </View>
-            </SafeAreaView>
+            </KeyboardAwareScrollView>
         </>
     );
 };
