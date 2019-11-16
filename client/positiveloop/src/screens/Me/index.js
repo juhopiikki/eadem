@@ -5,7 +5,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
-import { setUserName } from '../../store/actions'
+import { setUserName, setUserDescription } from '../../store/actions'
 
 /*const userNameToState(userName) {
   console.log("Set username to redux and backend");
@@ -16,6 +16,7 @@ const Me = (props) => {
     const [userName, onChangeUserName] = React.useState(props.userName);
     const [description, onChangeDesc] = React.useState(props.userdescription);
     const setUserNameToRedux = props.setUserName
+    const setUserDescriptionToRedux = props.setUserDescription
 
     return (
         <>
@@ -43,6 +44,7 @@ const Me = (props) => {
                         <TextInput underlineColorAndroid="transparent" style={styles.input} 
                           onChangeText={text => onChangeDesc(text)}
                           value={description}
+                          onBlur={() => setUserDescriptionToRedux(description) }
                         />
                     </View>
                 </View>
@@ -65,7 +67,7 @@ const mapStateToProps = state => ({
   userdescription: state.userdescription,
 });
 
-export default connect(mapStateToProps, { setUserName })(Me);
+export default connect(mapStateToProps, { setUserName, setUserDescription })(Me);
 
 const styles = StyleSheet.create({
     row: {
