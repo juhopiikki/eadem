@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
     body: {
-        padding: 40,
+        paddingHorizontal: 20,
+        paddingVertical: 20,
         flex: 1,
         flexDirection: 'column',
         backgroundColor: Colors.white,
