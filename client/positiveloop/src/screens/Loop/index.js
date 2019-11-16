@@ -7,6 +7,7 @@ import {
     Text,
     StatusBar,
     Dimensions,
+    Image
 } from 'react-native';
 import { ProgressBar, IconButton } from 'react-native-paper';
 import {getSavedRecords} from "../../store/actions";
@@ -56,8 +57,26 @@ class Loop extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
                 paddingBottom: 5,
-                paddingTop: 60
+                paddingTop: 0
             }}>
+
+                <View style={{
+                    backgroundColor: 'skyblue',
+                    height: 60,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%'
+                }}>
+                    <Image
+                        style={{
+                            height: 30,
+                            width: '100%',
+                            resizeMode: 'contain'
+                        }}
+                        source={require('../../assets/images/backward.png')}
+                    />
+                </View>
 
                 <View style={{
                     flex: 6,
