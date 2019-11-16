@@ -26,7 +26,7 @@ function createScreenTree() {
                                     options: {
                                         topBar: {
                                             visible: Platform.OS === 'ios',
-                                            drawBehind: true,
+                                            drawBehind: false,
                                             title: {
                                                 text: 'Loop',
                                                 fontWeight: 'bold',
