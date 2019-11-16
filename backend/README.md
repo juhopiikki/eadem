@@ -47,7 +47,7 @@ curl localhost:8080/mental/users/updateName \
 curl localhost:8080/mental/record/create \
   -H "Content-Type: application/json" \
   -X POST \
-  -d '{"usersid":"USERS_ID_HERE"}"'
+  -d '{"usersid":"d97b8baa-b626-4615-b142-fa6687887bfa", "filesid": "1beaee8b-358e-4e6e-97b5-a725485b147c", "title": "asd"}'
 ```
 
 Increase record like by one
