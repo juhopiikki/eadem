@@ -1,20 +1,27 @@
 package com.eadem.mental.controller;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.eadem.mental.wrappers.UserDescription;
+
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.eadem.mental.entities.Files;
 import com.eadem.mental.entities.Record;
 import com.eadem.mental.entities.Saved;
 import com.eadem.mental.entities.Users;
@@ -95,11 +102,34 @@ public class MentalController {
     return false;
   }
 
+  @GetMapping(
+      value = "/file/{filesid}",
+      produces = MediaType.IMAGE_PNG_VALUE
+  )
+  public @ResponseBody byte[] getFile(
+    @PathVariable("filesid") UUID filesId
+  ) {
+    final Files file = Files.getById(filesId);
+    if (file != null) {
+      return file.data;
+    }
+    return null;
+  }
+
   @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
   public String uploadFile(
-      @RequestParam("audiofile") MultipartFile file
+      @RequestParam("audiofile") MultipartFile mFile
   ) {
-    return file.getOriginalFilename();
+    final Files file = new Files();
+    try {
+      file.data = mFile.getBytes();
+      if (file.create()) {
+        return file.filesid.toString();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
 }
