@@ -28,6 +28,9 @@ class Loop extends Component {
                 <Text style={styles.sharedText}>
                     {trackId ? 'Shared by' : null}
                 </Text>
+                <Text style={styles.authorText}>
+                    {author || '--'}
+                </Text>
                 <Text>
                     {about || '--'}
                 </Text>

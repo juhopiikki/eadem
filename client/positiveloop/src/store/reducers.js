@@ -1,8 +1,8 @@
 const initialState = {
-    currentTrackId: 'idtest',
-    currentTitle: 'titletest',
-    currentAuthor: 'authortest',
-    currentAbout: 'abouttest',
+    currentTrackId: null,
+    currentTitle: null,
+    currentAuthor: null,
+    currentAbout: null,
     savedRecords: [],
     myRecords: [],
 };
