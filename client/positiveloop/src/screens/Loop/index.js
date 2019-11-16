@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import {
     StyleSheet,
     ScrollView,
@@ -9,8 +9,8 @@ import {
     Dimensions,
     Image
 } from 'react-native';
-import { ProgressBar, IconButton } from 'react-native-paper';
-import {getSavedRecords} from "../../store/actions";
+import { ProgressBar, IconButton, TouchableRipple } from 'react-native-paper';
+import { getSavedRecords } from "../../store/actions";
 import API from '../../utils/api'
 
 
@@ -21,7 +21,7 @@ class Loop extends Component {
     };
 
     likeCurrentTrack() {
-        const {trackId} = this.props;
+        const { trackId } = this.props;
         // const trackId = 'b55e5dfb-f4ab-4720-beb0-eece7d8421b2';
         if (trackId) {
             API.likeRecord(trackId,
@@ -48,8 +48,8 @@ class Loop extends Component {
     }
 
     render() {
-        const {trackId, author, title, about, getSavedRecords: getSaved} = this.props;
-        const {playing, liked} = this.state;
+        const { trackId, author, title, about, getSavedRecords: getSaved } = this.props;
+        const { playing, liked } = this.state;
         return (
             <View style={{
                 flex: 1,
@@ -94,32 +94,32 @@ class Loop extends Component {
                         {title || ''}
                     </Text>
                     {author &&
-                    <>
-                    <Text style={{
-                        fontFamily: 'NunitoSans',
-                        padding: 5,
-                        fontSize: 14,
-                    }}>
-                        {author ? 'Shared by' : ''}
-                    </Text>
-                    <Text style={{
-                        fontFamily: 'NunitoSans_bold',
-                        padding: 0,
-                        fontSize: 20,
-                    }}>
-                        {author || ''}
-                    </Text>
-                    </>}
+                        <>
+                            <Text style={{
+                                fontFamily: 'NunitoSans',
+                                padding: 5,
+                                fontSize: 14,
+                            }}>
+                                {author ? 'Shared by' : ''}
+                            </Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans_bold',
+                                padding: 0,
+                                fontSize: 20,
+                            }}>
+                                {author || ''}
+                            </Text>
+                        </>}
                     {(author && about) &&
-                    <Text style={{
-                        fontFamily: 'NunitoSans_italic',
-                        padding: 5,
-                        fontSize: 16,
-                        textAlign: 'center',
-                        marginHorizontal: 30
-                    }}>
-                        {about || ''}
-                    </Text>}
+                        <Text style={{
+                            fontFamily: 'NunitoSans_italic',
+                            padding: 5,
+                            fontSize: 16,
+                            textAlign: 'center',
+                            marginHorizontal: 30
+                        }}>
+                            {about || ''}
+                        </Text>}
                 </View>
 
 
@@ -132,7 +132,7 @@ class Loop extends Component {
                         visible={true}
                         progress={0.5}
                         color={'#F83E81'}
-                        style={{height: 8, width: 300}}
+                        style={{ height: 8, width: 300 }}
                     />
                 </View>
 
@@ -146,7 +146,7 @@ class Loop extends Component {
                     paddingHorizontal: 30,
                     marginBottom: 20
                 }}>
-                
+
 
                     {/* Forward backward buttons */}
                     <View style={{
@@ -187,11 +187,11 @@ class Loop extends Component {
                             />
                         </View>
                     </View>
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                     {/* Save play next buttons */}
                     <View style={{
                         // backgroundColor: 'skyblue',
@@ -229,19 +229,21 @@ class Loop extends Component {
                             alignItems: 'center'
                         }}>
                             {playing ?
-                            <IconButton
-                                icon={require('../../assets/images/pause.png')}
-                                color={'#F83E81'}
-                                size={75}
-                                onPress={() => this.pause()}
-                            />
-                            :
-                            <IconButton
-                                icon={require('../../assets/images/play.png')}
-                                color={'#F83E81'}
-                                size={75}
-                                onPress={() => this.play()}
-                            />}
+                                <TouchableRipple
+                                    borderless={true}
+                                    onPress={() => this.pause()}
+                                >
+                                    <Image style={{ width: 75, height: 75 }} source={require('../../assets/images/pause.png')}></Image>
+                                </TouchableRipple>
+                                :
+                                <TouchableRipple
+                                    borderless={true}
+                                    onPress={() => this.play()}
+                                >
+                                    <Image style={{ width: 75, height: 75 }} source={require('../../assets/images/play.png')}></Image>
+                                </TouchableRipple>
+                            }
+
                             <Text style={styles.tinyLabel}>
                                 {playing ? 'Pause' : 'Play'}
                             </Text>
@@ -266,10 +268,10 @@ class Loop extends Component {
                             </Text>
                         </View>
                     </View>
-                    
-                    
-                    
-                    
+
+
+
+
                     {/* Like button */}
                     <View style={{
                         // backgroundColor: 'skyblue',
@@ -281,21 +283,21 @@ class Loop extends Component {
                         marginBottom: 20
                     }}>
                         {liked ?
-                        <IconButton
-                            icon={require('../../assets/images/liked.png')}
-                            color={'#F83E81'}
-                            size={36}
-                        />
-                        :
-                        <IconButton
-                            icon={require('../../assets/images/like.png')}
-                            color={'black'}
-                            size={36}
-                            onPress={() => this.likeCurrentTrack()}
-                        />}
+                            <IconButton
+                                icon={require('../../assets/images/liked.png')}
+                                color={'#F83E81'}
+                                size={36}
+                            />
+                            :
+                            <IconButton
+                                icon={require('../../assets/images/like.png')}
+                                color={'black'}
+                                size={36}
+                                onPress={() => this.likeCurrentTrack()}
+                            />}
                         <Text style={[styles.tinyLabel, {
-                                bottom: -5
-                            }]}>
+                            bottom: -5
+                        }]}>
                             {liked ? 'Liked!' : 'Like'}
                         </Text>
                     </View>
@@ -314,7 +316,7 @@ const mapStateToProps = state => ({
     title: state.currentTitle,
 });
 
-export default connect(mapStateToProps, {getSavedRecords})(Loop);
+export default connect(mapStateToProps, { getSavedRecords })(Loop);
 
 const styles = StyleSheet.create({
     titleText: {
@@ -384,6 +386,6 @@ const styles = StyleSheet.create({
         fontFamily: 'NunitoSans',
         fontSize: 12,
         position: 'absolute',
-        bottom: 5
+        bottom: -20
     }
 });
