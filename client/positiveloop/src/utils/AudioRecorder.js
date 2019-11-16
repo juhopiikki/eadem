@@ -1,7 +1,6 @@
 import { Recorder } from '@react-native-community/audio-toolkit';
 import { Date } from 'core-js';
 import { Alert, PermissionsAndroid } from 'react-native';
-import API from './api';
 
 export default class AudioRecorder {
     recorder: Recorder = null;
@@ -10,6 +9,9 @@ export default class AudioRecorder {
         this.checkPermissions();
     }
 
+    /** Check if required permissions are granted
+     * @returns {boolean} permissions granted?
+     */
     async checkPermissions() {
         if (Platform.OS === 'android') {
             try {
@@ -42,8 +44,14 @@ export default class AudioRecorder {
         return "recording-" + Date.now() + ".aac";
     }
 
+    /** Start recording audio to a file */
     async record() {
-        await this.checkPermissions();
+        
+        // Check permission before trying to record
+        const permission = await this.checkPermissions();
+        if (!permission)
+            return;
+
         // Recorder initialised, stop (and destroy) before creating new
         if (this.recorder !== null) {
             this.stop();
@@ -62,7 +70,6 @@ export default class AudioRecorder {
     stop(): string {
         const filePath = this.recorder.fsPath;
         this.recorder.stop();
-        API.uploadudio(filePath, "tuubaa");
         return filePath;
     }
 }
