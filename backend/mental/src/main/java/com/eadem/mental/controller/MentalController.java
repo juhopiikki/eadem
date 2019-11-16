@@ -1,16 +1,12 @@
 package com.eadem.mental.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.eadem.mental.wrappers.UserDescription;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.eadem.mental.entities.Files;
 import com.eadem.mental.entities.Record;
 import com.eadem.mental.entities.Saved;
@@ -116,6 +111,20 @@ public class MentalController {
     return null;
   }
 
+  @PostMapping("/record/likeIncrease")
+  public boolean increaseLikeCounter(
+      @RequestBody UUID recordid
+  ) {
+      return Record.increaseLikeCounter(recordid);
+  }
+
+  @PostMapping("/record/getTop")
+  public List<Record> getTop(
+      @RequestBody int count
+  ) {
+    return Record.getTop(count);
+  }
+
   @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
   public String uploadFile(
       @RequestParam("audiofile") MultipartFile mFile
@@ -131,5 +140,4 @@ public class MentalController {
     }
     return null;
   }
-
 }
