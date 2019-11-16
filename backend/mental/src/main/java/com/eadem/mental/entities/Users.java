@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 public class Users {
 
   public UUID usersid = UUID.randomUUID();
+  public String username = "Anonym";
+  public String location = "Earth";
+  public String description = "Citizen of earth";
 
   private static JdbcTemplate jdbcTemplate;
 
@@ -27,6 +30,9 @@ public class Users {
     public Users mapRow(ResultSet rs, int rowNum) throws SQLException {
       final Users saved = new Users();
       saved.usersid = rs.getObject("usersid", UUID.class);
+      saved.username = rs.getString("username");
+      saved.location = rs.getString("location");
+      saved.description = rs.getString("description");
       return saved;
     }
     
