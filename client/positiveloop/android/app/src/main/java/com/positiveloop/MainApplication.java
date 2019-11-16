@@ -17,6 +17,8 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 
+import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
+
 public class MainApplication extends NavigationApplication {
 
             @Override
@@ -38,7 +40,8 @@ public class MainApplication extends NavigationApplication {
             protected List<ReactPackage> getPackages() {
                 // Add additional packages you require here
                                 return Arrays.<ReactPackage>asList(
-                                    new AsyncStoragePackage()
+                                    new AsyncStoragePackage(),
+                                    new RNUUIDGeneratorPackage()
                                 );
             }
 
