@@ -1,8 +1,8 @@
 import {Navigation} from 'react-native-navigation';
 import { createStore } from 'redux'
 import {Provider} from 'react-redux';
-import App from "../../App";
 import React from "react";
+import Test from './Test'
 import {test} from "../store/reducers";
 
 let store;
@@ -18,8 +18,8 @@ function ReduxProvider(Component) {
 
 
 export default () => {
-    Navigation.registerComponent('Listen', () => ReduxProvider(App), () => App);
-    Navigation.registerComponent('Record', () => ReduxProvider(App), () => App);
-    Navigation.registerComponent('Saved', () => ReduxProvider(App), () => App);
-    Navigation.registerComponent('Me', () => ReduxProvider(App), () => App);
+    Navigation.registerComponent('Listen', () => ReduxProvider(Test), () => Test);
+    Navigation.registerComponent('Record', () => ReduxProvider(Test), () => Test);
+    Navigation.registerComponent('Saved', () => ReduxProvider(Test), () => Test);
+    Navigation.registerComponent('Me', () => ReduxProvider(Test), () => Test);
 }
