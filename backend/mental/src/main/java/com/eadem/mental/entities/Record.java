@@ -2,6 +2,7 @@ package com.eadem.mental.entities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class Record {
   public UUID usersid = null;
   public int likecount = 0;
   public String filepath = "";
+  public String title = "";
 
   private static JdbcTemplate jdbcTemplate;
 
@@ -33,9 +35,24 @@ public class Record {
       record.usersid = rs.getObject("usersid", UUID.class);
       record.likecount = rs.getInt("likecount");
       record.filepath = rs.getString("filepath");
+      record.title = rs.getString("title");
       return record;
     }
-    
+
+  }
+
+  public static class RecordRowListMapper implements RowMapper<Record> {
+    @Override
+    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
+      final Record record = new Record();
+      record.recordid = rs.getObject("recordid", UUID.class);
+      record.usersid = rs.getObject("usersid", UUID.class);
+      record.likecount = rs.getInt("likecount");
+      record.filepath = rs.getString("filepath");
+      record.title = rs.getString("title");
+      return record;
+    }
+
   }
 
   public static Record getById(UUID id) {
@@ -76,6 +93,33 @@ public class Record {
     } catch (DataAccessException e) {
       e.printStackTrace();
       return false;
+    }
+  }
+
+  public static boolean increaseLikeCounter(UUID recordid) {
+    try {
+      return jdbcTemplate.update(
+          "UPDATE record "
+              + "SET likecount = likecount + 1 "
+              + "WHERE recordid = ?",
+            recordid
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public static List<Record> getTop(int count) {
+    try {
+      return jdbcTemplate.query(
+              "SELECT * FROM record limit ?",
+              new Object[]{ count },
+              new RecordRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
     }
   }
 }

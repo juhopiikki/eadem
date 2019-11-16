@@ -1,5 +1,6 @@
 package com.eadem.mental.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,11 +96,24 @@ public class MentalController {
     return false;
   }
 
+  @PostMapping("/record/likeIncrease")
+  public boolean increaseLikeCounter(
+      @RequestBody UUID recordid
+  ) {
+      return Record.increaseLikeCounter(recordid);
+  }
+
+  @PostMapping("/record/getTop")
+  public List<Record> getTop(
+      @RequestBody int count
+  ) {
+    return Record.getTop(count);
+  }
+
   @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
   public String uploadFile(
       @RequestParam("audiofile") MultipartFile file
   ) {
     return file.getOriginalFilename();
   }
-
 }
