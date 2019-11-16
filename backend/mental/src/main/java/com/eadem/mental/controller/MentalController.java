@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("admin")
+@RequestMapping("mental")
 public class MentalController {
+
   public MentalController() { }
-  /**
-   * @return Always returns ok
-   */
+
   @GetMapping("/status")
   public String serverStatus() {
-	return "ok";
+    return "ok";
   }
+
 }

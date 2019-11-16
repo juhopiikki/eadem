@@ -1,29 +1,23 @@
 package com.eadem.mental.configuration;
 
 import javax.sql.DataSource;
+
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
+@Configuration
 public class PostgresConfiguration {
-  private static HikariConfig config = new HikariConfig();
-  private static HikariDataSource ds;
-
-  static {
-    config.setJdbcUrl("jdbc:postgresql://localhost:5432/mental");
-    config.setDriverClassName("org.postgresql.Driver");
-    config.setUsername("mental");
-    config.setPassword("mental");
-    config.addDataSourceProperty("cachePrepStmts", "true");
-    config.addDataSourceProperty("prepStmtCacheSize", "250");
-    config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-    ds = new HikariDataSource(config);
-  }
 
   @Bean
   public DataSource dataSource() {
-    return ds;
+    return DataSourceBuilder.create()
+      .driverClassName("org.postgresql.Driver")
+      .url("jdbc:mysql://localhost:5432/mental")
+      .username("mental")
+      .password("mental")
+      .build(); 
   }
 
   @Bean
