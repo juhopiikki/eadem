@@ -9,7 +9,7 @@ import {
     Dimensions,
 } from 'react-native';
 import { ProgressBar, IconButton } from 'react-native-paper';
-import {clearTrackDetails} from "../../store/actions";
+import {getSavedRecords} from "../../store/actions";
 
 class Loop extends Component {
     state = {
@@ -17,7 +17,7 @@ class Loop extends Component {
     };
 
     render() {
-        const {trackId, author, title, about, clearTrackDetails: clear} = this.props;
+        const {trackId, author, title, about, getSavedRecords: getSaved} = this.props;
         const {playing} = this.state;
         return (
             <View style={styles.pageContainer}>
@@ -78,7 +78,7 @@ class Loop extends Component {
                         icon="content-save"
                         color={'black'}
                         size={36}
-                        onPress={() => clear()}
+                        onPress={() => getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
                     />
                 </View>
             </View>
@@ -93,7 +93,7 @@ const mapStateToProps = state => ({
     title: state.currentTitle,
 });
 
-export default connect(mapStateToProps, {clearTrackDetails})(Loop);
+export default connect(mapStateToProps, {getSavedRecords})(Loop);
 
 const styles = StyleSheet.create({
     titleText: {

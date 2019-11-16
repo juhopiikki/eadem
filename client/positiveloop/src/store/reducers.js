@@ -3,9 +3,9 @@ const initialState = {
     currentTitle: 'titletest',
     currentAuthor: 'authortest',
     currentAbout: 'abouttest',
-    savedAudioIds: [],
-    favoriteAudioIds: [],
-}
+    savedRecords: [],
+    myRecords: [],
+};
 
 function appReducer(state = initialState, action) {
     switch (action.type) {
@@ -28,6 +28,16 @@ function appReducer(state = initialState, action) {
             return {
                 ...state,
                 currentAbout: action.payload,
+            };
+        case 'SET_SAVED_RECORDS':
+            return {
+                ...state,
+                savedRecords: action.payload,
+            };
+        case 'SET_MY_RECORDS':
+            return {
+                ...state,
+                myRecords: action.payload,
             };
         case 'RESET_TRACK_DETAILS':
             return {
