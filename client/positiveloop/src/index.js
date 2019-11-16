@@ -6,6 +6,11 @@ function createScreenTree() {
         Navigation.setRoot({
             root: {
                 bottomTabs: {
+                    options: {
+                        bottomTabs: {
+                            titleDisplayMode: 'alwaysShow',
+                        },
+                    },
                     children: [{
                         stack: {
                             children: [{
