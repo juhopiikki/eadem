@@ -1,6 +1,10 @@
 import {Navigation} from 'react-native-navigation';
-import registerScreens from './screens'
-import colors from './assets/colors'
+import AsyncStorage from '@react-native-community/async-storage';
+import UUIDGenerator from 'react-native-uuid-generator';
+import registerScreens from './screens';
+import colors from './assets/colors';
+
+const uuidKey = 'POSITIVELOOP_USER_KEY';
 
 function createScreenTree() {
     Navigation.events().registerAppLaunchedListener(() => {
@@ -11,6 +15,7 @@ function createScreenTree() {
                         bottomTabs: {
                             titleDisplayMode: 'alwaysShow',
                         },
+
                     },
                     children: [{
                         stack: {
@@ -26,7 +31,11 @@ function createScreenTree() {
                                     testID: 'FIRST_TAB_BAR_BUTTON',
                                     iconColor: colors.inactiveTab,
                                     selectedIconColor: colors.activeTab,
-                                }
+                                },
+                                topBar: {
+                                    visible: false,
+                                    drawBehind: true,
+                                },
                             }
                         }
                     },
@@ -44,7 +53,11 @@ function createScreenTree() {
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
-                                    }
+                                    },
+                                    topBar: {
+                                        visible: false,
+                                        drawBehind: true,
+                                    },
                                 }
                             }
                         }, {
@@ -61,7 +74,11 @@ function createScreenTree() {
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
-                                    }
+                                    },
+                                    topBar: {
+                                        visible: false,
+                                        drawBehind: true,
+                                    },
                                 }
                             }
                         }, {
@@ -78,7 +95,11 @@ function createScreenTree() {
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
-                                    }
+                                    },
+                                    topBar: {
+                                        visible: false,
+                                        drawBehind: true,
+                                    },
                                 }
                             }
                         },
@@ -89,8 +110,32 @@ function createScreenTree() {
     });
 }
 
-export function initializeApp () {
+const getUserKey = async () => {
+    try {
+        const value = await AsyncStorage.getItem(uuidKey);
+        if (value !== null) {
+            // User key exists
+            console.log('User key!', value)
+        } else {
+            // User key does not exist. Store a new one.
+            try {
+                const newUuid = await UUIDGenerator.getRandomUUID()
+                await AsyncStorage.setItem(uuidKey, newUuid);
+                console.log('Saved new user key!', newUuid)
+            } catch (error) {
+                // Error saving data
+                console.log(error)
+            }
+        }
+    } catch (error) {
+        // Error retrieving data
+        console.log(error);
+    }
+};
+
+export async function initializeApp () {
     registerScreens();
     createScreenTree();
+    await getUserKey();
 }
 

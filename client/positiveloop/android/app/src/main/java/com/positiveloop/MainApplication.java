@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Arrays;
 
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
@@ -37,7 +38,7 @@ public class MainApplication extends NavigationApplication {
             protected List<ReactPackage> getPackages() {
                 // Add additional packages you require here
                                 return Arrays.<ReactPackage>asList(
-                            // eg. new VectorIconsPackage()
+                                    new AsyncStoragePackage()
                                 );
             }
 
