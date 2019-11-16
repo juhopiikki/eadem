@@ -27,7 +27,7 @@ curl localhost:8080/mental/users/getById \
 
 Update user description
 ```
-curl localhost:8080/mental/users/getById \
+curl localhost:8080/mental/users/updateDescription \
   -H "Content-Type: application/json" \
   -X POST \
   -d '{"usersid":"d97b8baa-b626-4615-b142-fa6687887bfa","description":"Citizen of earth"}'
