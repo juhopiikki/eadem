@@ -2,9 +2,12 @@ package com.eadem.mental.controller;
 
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.eadem.mental.wrappers.UserDescription;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,9 +95,9 @@ public class MentalController {
     return false;
   }
 
-  @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+  @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = { "multipart/form-data" })
   public String uploadFile(
-      @RequestParam("audiofile") final MultipartFile file
+      @RequestParam("audiofile") MultipartFile file
   ) {
     return file.getOriginalFilename();
   }
