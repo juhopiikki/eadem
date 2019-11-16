@@ -54,6 +54,19 @@ public class Record {
     }
   }
 
+  public static List<Record> getByUserId(UUID userid) {
+    try {
+      return jdbcTemplate.query(
+        "SELECT * FROM record WHERE usersid=?",
+        new Object[]{ userid },
+        new RecordRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public static Record getRandom() {
     try {
       return jdbcTemplate.queryForObject(

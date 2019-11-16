@@ -147,6 +147,13 @@ public class MentalController {
     return Record.getById(recordid);
   }
 
+  @PostMapping("/record/getByUserId")
+  public List<Record> GetRecordByUserId(
+      @RequestBody UUID userid
+  ) {
+    return Record.getByUserId(userid);
+  }
+
   @PostMapping("/record/deleteById")
   public boolean DeleteRecord(
     @RequestBody UUID recordid
