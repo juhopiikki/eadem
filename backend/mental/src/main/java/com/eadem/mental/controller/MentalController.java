@@ -3,6 +3,8 @@ package com.eadem.mental.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+
+import com.eadem.mental.wrappers.CreateRecord;
 import com.eadem.mental.wrappers.UserDescription;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -54,13 +56,15 @@ public class MentalController {
   }
 
   @PostMapping("/users/create")
-  public boolean createUsers(
+  public UUID createUsers(
       @RequestBody Users user
   ) {
     if (user != null) {
-      return user.create();
+      if (user.create()) {
+        return user.usersid;
+      }
     }
-    return false;
+    return null;
   }
 
   @PostMapping("/users/getById")
@@ -88,13 +92,18 @@ public class MentalController {
   }
 
   @PostMapping("/record/create")
-  public boolean createRecord(
-      @RequestBody Record record
+  public UUID createRecord(
+      @RequestBody CreateRecord record
   ) {
     if (record != null) {
-      return record.create();
+      final Record tmp = new Record();
+      tmp.filesid = record.filesid;
+      tmp.title = record.title;
+      if (tmp.create()) {
+        return tmp.recordid;
+      }
     }
-    return false;
+    return null;
   }
 
   @GetMapping(

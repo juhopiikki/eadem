@@ -16,8 +16,8 @@ public class Record {
 
   public UUID recordid = UUID.randomUUID();
   public UUID usersid = null;
+  public UUID filesid = null;
   public int likecount = 0;
-  public String filepath = "";
   public String title = "";
 
   private static JdbcTemplate jdbcTemplate;
@@ -33,22 +33,8 @@ public class Record {
       final Record record = new Record();
       record.recordid = rs.getObject("recordid", UUID.class);
       record.usersid = rs.getObject("usersid", UUID.class);
+      record.filesid = rs.getObject("filesid", UUID.class);
       record.likecount = rs.getInt("likecount");
-      record.filepath = rs.getString("filepath");
-      record.title = rs.getString("title");
-      return record;
-    }
-
-  }
-
-  public static class RecordRowListMapper implements RowMapper<Record> {
-    @Override
-    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
-      final Record record = new Record();
-      record.recordid = rs.getObject("recordid", UUID.class);
-      record.usersid = rs.getObject("usersid", UUID.class);
-      record.likecount = rs.getInt("likecount");
-      record.filepath = rs.getString("filepath");
       record.title = rs.getString("title");
       return record;
     }
@@ -86,9 +72,9 @@ public class Record {
     try {
       return jdbcTemplate.update(
           "INSERT INTO record "
-          + "(recordid, usersid, likecount, filepath) "
+          + "(recordid, usersid, likecount, filesid) "
           + "VALUES (?, ?, ?, ?)",
-         recordid, usersid, likecount, filepath
+         recordid, usersid, likecount, filesid
       ) > 0;
     } catch (DataAccessException e) {
       e.printStackTrace();
