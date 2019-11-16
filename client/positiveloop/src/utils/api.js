@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-const API_ENDPOINTS = "http://10.0.2.2:8080/mental";
+const API_ENDPOINTS = "http://54.229.97.181:8080/mental";
 
 export default class API extends Component {
 

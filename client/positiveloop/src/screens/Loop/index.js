@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import {
     StyleSheet,
     ScrollView,
@@ -8,31 +9,27 @@ import {
     Dimensions,
 } from 'react-native';
 import { ProgressBar, IconButton } from 'react-native-paper';
-
-var {height, width} = Dimensions.get('window');
+import {clearTrackDetails} from "../../store/actions";
 
 class Loop extends Component {
     state = {
-        trackAvailable: false,
         playing: false,
-        currentTitle: null,
-        currentAuthor: null,
-        currentAbout: null,
     };
 
     render() {
-        const {trackAvailable, playing, currentTitle, currentAuthor, currentAbout} = this.state;
+        const {trackId, author, title, about, clearTrackDetails: clear} = this.props;
+        const {playing} = this.state;
         return (
             <View style={styles.pageContainer}>
                 <View style={styles.infoContainer}>
                 <Text style={styles.titleText}>
-                    {currentTitle || '--'}
+                    {title || '--'}
                 </Text>
                 <Text style={styles.sharedText}>
-                    {trackAvailable ? 'Shared by' : 'Shared by'}
+                    {trackId ? 'Shared by' : null}
                 </Text>
                 <Text>
-                    {currentAbout || '--'}
+                    {about || '--'}
                 </Text>
                 </View>
                 <View style={styles.trackContainer}>
@@ -81,7 +78,7 @@ class Loop extends Component {
                         icon="content-save"
                         color={'black'}
                         size={36}
-                        onPress={() => console.log('Pressed')}
+                        onPress={() => clear()}
                     />
                 </View>
             </View>
@@ -89,7 +86,14 @@ class Loop extends Component {
     }
 }
 
-export default Loop;
+const mapStateToProps = state => ({
+    trackId: state.currentTrackId,
+    author: state.currentAuthor,
+    about: state.currentAbout,
+    title: state.currentTitle,
+});
+
+export default connect(mapStateToProps, {clearTrackDetails})(Loop);
 
 const styles = StyleSheet.create({
     titleText: {
