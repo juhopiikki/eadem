@@ -11,24 +11,24 @@ const Me = () => {
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
                 <View style={styles.body}>
                     <View style={styles.titleRow}>
-                        <Text style={[styles.title, styles.black]}>
+                        <Text style={styles.title}>
                             My Profile
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={[styles.inputTitle, styles.black]}>
+                        <Text style={styles.inputTitle}>
                             Name
                         </Text>
                         <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
                     </View>
                     <View style={styles.row}>
-                        <Text style={[styles.inputTitle, styles.black]}>
+                        <Text style={styles.inputTitle}>
                             Little something about me
                         </Text>
                         <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
                     </View>
                     <View style={styles.titleRow}>
-                        <Text style={[styles.title, styles.black]}>
+                        <Text style={styles.title}>
                             My Shared Recordings
                         </Text>
                     </View>
@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
     },
     input: {
+        fontFamily: 'NunitoSans',
+        fontWeight: 'normal',
         height: 40,
         width: '100%',
         borderBottomColor: '#000000', 
@@ -60,11 +62,12 @@ const styles = StyleSheet.create({
         paddingLeft: 0,
         marginLeft: 0,
         paddingHorizontal: 0,
-        fontSize: 18,
+        fontSize: 20,
     },
     inputTitle: {
+        fontFamily: 'NunitoSans_bold',
         paddingBottom: 5,
-        fontSize: 14,
+        fontSize: 16,
     },
     titleRow: {
         flex: 1,
@@ -73,13 +76,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     title: {
-        fontSize: 24,
-    },
-    black: Platform.OS === 'ios' ? {
-        fontWeight: '900'
-      } : {
-        fontFamily: 'Roboto-Black',
-      },
+        fontFamily: 'NunitoSans_bold',
+        fontSize: 28
+    }
 });
 
 export default Me;
