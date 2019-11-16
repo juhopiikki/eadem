@@ -1,5 +1,6 @@
 import {Navigation} from 'react-native-navigation';
 import registerScreens from './screens'
+import colors from './assets/colors'
 
 function createScreenTree() {
     Navigation.events().registerAppLaunchedListener(() => {
@@ -16,16 +17,15 @@ function createScreenTree() {
                             children: [{
                                 component: {
                                     name: 'Listen',
-                                    passProps: {
-                                        text: 'This is tab 1'
-                                    }
                                 }
                             }],
                             options: {
                                 bottomTab: {
                                     icon: require('./assets/test.png'),
                                     text: 'Listen',
-                                    testID: 'FIRST_TAB_BAR_BUTTON'
+                                    testID: 'FIRST_TAB_BAR_BUTTON',
+                                    iconColor: colors.inactiveTab,
+                                    selectedIconColor: colors.activeTab,
                                 }
                             }
                         }
@@ -35,16 +35,15 @@ function createScreenTree() {
                                 children: [{
                                     component: {
                                         name: 'Record',
-                                        passProps: {
-                                            text: 'This is tab 1'
-                                        }
                                     }
                                 }],
                                 options: {
                                     bottomTab: {
                                         icon: require('./assets/test.png'),
                                         text: 'Record',
-                                        testID: 'FIRST_TAB_BAR_BUTTON'
+                                        testID: 'FIRST_TAB_BAR_BUTTON',
+                                        iconColor: colors.inactiveTab,
+                                        selectedIconColor: colors.activeTab,
                                     }
                                 }
                             }
@@ -53,16 +52,15 @@ function createScreenTree() {
                                 children: [{
                                     component: {
                                         name: 'Saved',
-                                        passProps: {
-                                            text: 'This is tab 1'
-                                        }
                                     }
                                 }],
                                 options: {
                                     bottomTab: {
                                         icon: require('./assets/test.png'),
                                         text: 'Saved',
-                                        testID: 'FIRST_TAB_BAR_BUTTON'
+                                        testID: 'FIRST_TAB_BAR_BUTTON',
+                                        iconColor: colors.inactiveTab,
+                                        selectedIconColor: colors.activeTab,
                                     }
                                 }
                             }
@@ -71,16 +69,15 @@ function createScreenTree() {
                                 children: [{
                                     component: {
                                         name: 'Me',
-                                        passProps: {
-                                            text: 'This is tab 1'
-                                        }
                                     }
                                 }],
                                 options: {
                                     bottomTab: {
                                         icon: require('./assets/test.png'),
                                         text: 'Me',
-                                        testID: 'FIRST_TAB_BAR_BUTTON'
+                                        testID: 'FIRST_TAB_BAR_BUTTON',
+                                        iconColor: colors.inactiveTab,
+                                        selectedIconColor: colors.activeTab,
                                     }
                                 }
                             }
