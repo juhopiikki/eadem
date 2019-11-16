@@ -17,31 +17,23 @@ export const setCurrentAbout = (about) => (dispatch) => {
 };
 
 export const getSavedRecords = (userId) => (dispatch) => {
-    try {
-        API.getSavedRecords(
-            userId,
-            (res) => {
-                console.log(res);
-                if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_SAVED_RECORDS', payload: res});
-                else dispatch({type: 'SET_SAVED_RECORDS', payload: []});
-            }
-        );
-    } catch (e) {
-        console.log(error);
-    }
+    API.getSavedRecords(
+        userId,
+        (res) => {
+            console.log(res);
+            if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_SAVED_RECORDS', payload: res});
+            else dispatch({type: 'SET_SAVED_RECORDS', payload: []});
+        }
+    );
 };
 
 export const getMyRecords = (userId) => (dispatch) => {
-    try {
-        API.getUserRecords(
-            userId,
-            (res) => {
-                console.log(res);
-                if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_MY_RECORDS', payload: res});
-                else dispatch({type: 'SET_MY_RECORDS', payload: []});
-            }
-        );
-    } catch (e) {
-        console.log(error);
-    }
+    API.getUserRecords(
+        userId,
+        (res) => {
+            console.log(res);
+            if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_MY_RECORDS', payload: res});
+            else dispatch({type: 'SET_MY_RECORDS', payload: []});
+        }
+    );
 };
