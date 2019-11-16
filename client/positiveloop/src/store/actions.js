@@ -1,4 +1,5 @@
 import API from '../utils/api'
+import { getUserKey } from '../index'
 
 export const clearTrackDetails = () => (dispatch) => {
     dispatch({type: 'RESET_TRACK_DETAILS'});
@@ -36,4 +37,24 @@ export const getMyRecords = (userId) => (dispatch) => {
             else dispatch({type: 'SET_MY_RECORDS', payload: []});
         }
     );
+};
+
+export const setUserName = (userName) => async(dispatch) => {
+    try {
+        const userId = await getUserKey();
+        console.log("Updating username to backend")
+        dispatch({type: 'SET_USER_NAME', payload: userName});
+        API.updateUserName({
+            "usersid": userId,
+            "username": userName
+        },
+            (res) => console.log(res)
+        );
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+export const setUserDescription = (description) => (dispatch) => {
+    dispatch({type: 'SET_USER_DESCRIPTION', payload: description});
 };
