@@ -1,4 +1,5 @@
 import API from '../utils/api'
+import { getUserKey } from '../index'
 
 export const clearTrackDetails = () => (dispatch) => {
     dispatch({type: 'RESET_TRACK_DETAILS'});
@@ -17,31 +18,43 @@ export const setCurrentAbout = (about) => (dispatch) => {
 };
 
 export const getSavedRecords = (userId) => (dispatch) => {
-    try {
-        API.getSavedRecords(
-            userId,
-            (res) => {
-                console.log(res);
-                if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_SAVED_RECORDS', payload: res});
-                else dispatch({type: 'SET_SAVED_RECORDS', payload: []});
-            }
-        );
-    } catch (e) {
-        console.log(error);
-    }
+    API.getSavedRecords(
+        userId,
+        (res) => {
+            console.log('API response for saved records', res);
+            if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_SAVED_RECORDS', payload: res});
+            else dispatch({type: 'SET_SAVED_RECORDS', payload: []});
+        }
+    );
 };
 
 export const getMyRecords = (userId) => (dispatch) => {
+    API.getUserRecords(
+        userId,
+        (res) => {
+            console.log('API response for user records', res);
+            if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_MY_RECORDS', payload: res});
+            else dispatch({type: 'SET_MY_RECORDS', payload: []});
+        }
+    );
+};
+
+export const setUserName = (userName) => async(dispatch) => {
     try {
-        API.getUserRecords(
-            userId,
-            (res) => {
-                console.log(res);
-                if (Array.isArray(res) && res.length > 0) dispatch({type: 'SET_MY_RECORDS', payload: res});
-                else dispatch({type: 'SET_MY_RECORDS', payload: []});
-            }
+        const userId = await getUserKey();
+        console.log("Updating username to backend")
+        dispatch({type: 'SET_USER_NAME', payload: userName});
+        API.updateUserName({
+            "usersid": userId,
+            "username": userName
+        },
+            (res) => console.log(res)
         );
     } catch (e) {
-        console.log(error);
+        console.log(e);
     }
+};
+
+export const setUserDescription = (description) => (dispatch) => {
+    dispatch({type: 'SET_USER_DESCRIPTION', payload: description});
 };

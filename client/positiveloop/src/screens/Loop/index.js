@@ -10,15 +10,33 @@ import {
 } from 'react-native';
 import { ProgressBar, IconButton } from 'react-native-paper';
 import {getSavedRecords} from "../../store/actions";
+import API from '../../utils/api'
+
 
 class Loop extends Component {
     state = {
         playing: false,
+        liked: false,
     };
+
+    likeCurrentTrack() {
+        const {trackId} = this.props;
+        // const trackId = 'b55e5dfb-f4ab-4720-beb0-eece7d8421b2';
+        if (trackId) {
+            API.likeRecord(trackId,
+                (sts) => console.log('likeRecord success?', sts)
+            );
+            this.setState({
+                liked: true
+            })
+        } else {
+            console.log('No track to like!')
+        }
+    }
 
     render() {
         const {trackId, author, title, about, getSavedRecords: getSaved} = this.props;
-        const {playing} = this.state;
+        const {playing, liked} = this.state;
         return (
             <View style={{
                 flex: 1,
@@ -219,16 +237,23 @@ class Loop extends Component {
                         paddingHorizontal: 10,
                         marginBottom: 20
                     }}>
+                        {liked ?
+                        <IconButton
+                            icon={require('../../assets/images/liked.png')}
+                            color={'#F83E81'}
+                            size={36}
+                        />
+                        :
                         <IconButton
                             icon={require('../../assets/images/like.png')}
                             color={'black'}
                             size={36}
-                            onPress={() => console.log('Pressed')}
-                        />
+                            onPress={() => this.likeCurrentTrack()}
+                        />}
                         <Text style={[styles.tinyLabel, {
                                 bottom: -5
                             }]}>
-                            Like
+                            {liked ? 'Liked!' : 'Like'}
                         </Text>
                     </View>
 

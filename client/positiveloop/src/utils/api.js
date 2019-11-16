@@ -8,7 +8,7 @@ export default class API extends Component {
     super(props);
   }
 
-  /** 
+  /**
    * Create new user.
    *
    *
@@ -35,10 +35,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(res => res.json())
-      .then((result) => cb(result));
+      .then((result) => cb(result)).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Get user.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
@@ -50,7 +50,7 @@ export default class API extends Component {
    * } / null
 
   API.getUserById(
-    "3d4971bf-0f45-4a60-930d-547ed335e6bf", 
+    "3d4971bf-0f45-4a60-930d-547ed335e6bf",
     (sts) => console.log(sts)
   );
 
@@ -64,10 +64,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Update user name.
    *
    * Input: {
@@ -79,7 +79,7 @@ export default class API extends Component {
   API.updateUserName({
     "usersid": "3d4971bf-0f45-4a60-930d-547ed335e6bf",
     "username": "Fuck this"
-  }, 
+  },
     (sts) => console.log(sts)
   );
 
@@ -93,10 +93,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Update user description.
    *
    * Input: {
@@ -108,7 +108,7 @@ export default class API extends Component {
   API.updateUserDescription({
     "usersid": "3d4971bf-0f45-4a60-930d-547ed335e6bf",
     "description": "And this"
-  }, 
+  },
     (sts) => console.log(sts)
   );
 
@@ -122,10 +122,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Create new record.
    *
    * Input: {
@@ -139,7 +139,7 @@ export default class API extends Component {
     "usersid": "3d4971bf-0f45-4a60-930d-547ed335e6bf",
     "filesid": "1beaee8b-358e-4e6e-97b5-a725485b147c",
     "title": "Stupid title"
-  }, 
+  },
     (sts) => console.log(sts)
   );
 
@@ -153,16 +153,16 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Add like to record.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
    * Returns: true / false
 
-  API.likeRecord("2f72839f-45f7-4bde-a63e-43b5d3e70a98", 
+  API.likeRecord("2f72839f-45f7-4bde-a63e-43b5d3e70a98",
     (sts) => console.log(sts)
   );
 
@@ -176,10 +176,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Get record by id.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
@@ -191,7 +191,7 @@ export default class API extends Component {
    *   "title":"asd"
    * } / null
 
-  API.getRecordById("2f72839f-45f7-4bde-a63e-43b5d3e70a98", 
+  API.getRecordById("2f72839f-45f7-4bde-a63e-43b5d3e70a98",
     (sts) => console.log(sts)
   );
 
@@ -205,10 +205,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Get user records.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
@@ -222,7 +222,7 @@ export default class API extends Component {
    *   }
    * ] / null
 
-  API.getUserRecords("3d4971bf-0f45-4a60-930d-547ed335e6bf", 
+  API.getUserRecords("3d4971bf-0f45-4a60-930d-547ed335e6bf",
     (sts) => console.log(sts)
   );
 
@@ -236,16 +236,16 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Delete record.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
    * Returns: true / false
 
-  API.deleteRecord("e36652da-3682-4871-bdb3-d6a91a8af0a8", 
+  API.deleteRecord("e36652da-3682-4871-bdb3-d6a91a8af0a8",
     (sts) => console.log(sts)
   );
 
@@ -259,10 +259,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Save saved.
    *
    * Input: {
@@ -288,10 +288,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Get users saved records.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
@@ -319,10 +319,10 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
-  /** 
+  /**
    * Remove saved record.
    *
    * Input: "d97b8baa-b626-4615-b142-fa6687887bfa"
@@ -342,7 +342,7 @@ export default class API extends Component {
       },
       body: JSON.stringify(input),
     }).then(response => response.json())
-      .then(cb);
+      .then(cb).catch(() => console.log('API ERROR'));
   }
 
 }

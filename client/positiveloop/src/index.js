@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import UUIDGenerator from 'react-native-uuid-generator';
 import registerScreens from './screens';
 import colors from './assets/colors';
+import {getMyRecords, getSavedRecords} from "./store/actions";
+import store from './store/store'
 
 const uuidKey = 'POSITIVELOOP_USER_KEY';
 
@@ -148,32 +150,38 @@ function createScreenTree() {
     });
 }
 
-const getUserKey = async () => {
+export const getUserKey = async () => {
     try {
-        const value = await AsyncStorage.getItem(uuidKey);
-        if (value !== null) {
+        const existingUuid = await AsyncStorage.getItem(uuidKey);
+        if (existingUuid !== null) {
             // User key exists
-            console.log('User key!', value)
+            console.log('User key!', existingUuid)
+            return existingUuid;
         } else {
             // User key does not exist. Store a new one.
             try {
                 const newUuid = await UUIDGenerator.getRandomUUID()
                 await AsyncStorage.setItem(uuidKey, newUuid);
                 console.log('Saved new user key!', newUuid)
+                return newUuid;
             } catch (error) {
                 // Error saving data
                 console.log(error)
+                return null;
             }
         }
     } catch (error) {
         // Error retrieving data
         console.log(error);
+        return null;
     }
 };
 
 export async function initializeApp () {
     registerScreens();
     createScreenTree();
-    await getUserKey();
+    const user = await getUserKey();
+    store.dispatch(getSavedRecords(user));
+    store.dispatch(getMyRecords(user));
 }
 

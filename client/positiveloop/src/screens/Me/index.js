@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {connect} from 'react-redux'
 import { Platform, SafeAreaView, StatusBar, StyleSheet, View, TextInput, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
+import { setUserName } from '../../store/actions'
 
+/*const userNameToState(userName) {
+  console.log("Set username to redux and backend");
+  setUserName(userName);
+}*/
 
-const Me = () => {
+const Me = (props) => {
+    const [userName, onChangeUserName] = React.useState(props.userName);
+    const [description, onChangeDesc] = React.useState(props.userdescription);
+    const setUserNameToRedux = props.setUserName
+
     return (
         <>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
@@ -20,13 +30,20 @@ const Me = () => {
                         <Text style={styles.inputTitle}>
                             Name
                         </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
+                        <TextInput underlineColorAndroid="transparent" style={styles.input}
+                          onChangeText={text => onChangeUserName(text)}
+                          value={userName}
+                          onBlur={() => setUserNameToRedux(userName) }
+                        />
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.inputTitle}>
                             Little something about me
                         </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
+                        <TextInput underlineColorAndroid="transparent" style={styles.input} 
+                          onChangeText={text => onChangeDesc(text)}
+                          value={description}
+                        />
                     </View>
                 </View>
                 <View style={styles.recordings}>
@@ -42,6 +59,13 @@ const Me = () => {
         </>
     );
 };
+
+const mapStateToProps = state => ({
+  userName: state.userName,
+  userdescription: state.userdescription,
+});
+
+export default connect(mapStateToProps, { setUserName })(Me);
 
 const styles = StyleSheet.create({
     row: {
@@ -94,5 +118,3 @@ const styles = StyleSheet.create({
         fontSize: 28
     }
 });
-
-export default Me;
