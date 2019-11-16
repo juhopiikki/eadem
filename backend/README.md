@@ -96,7 +96,7 @@ curl localhost:8080/mental/record/deleteById \
 curl localhost:8080/mental/saved/create \
   -H "Content-Type: application/json" \
   -X POST \
-  -d '{"usersid":"USERS_ID_HERE", "recordid":"RECORD_ID_HERE"}"'
+  -d '{"usersid":"USERS_ID_HERE", "recordid":"RECORD_ID_HERE"}'
 ```
 
 Get top n saved

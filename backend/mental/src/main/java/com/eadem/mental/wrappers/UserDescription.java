@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public class UserDescription {
 
-    public UUID usersid;
-    public String description;
+        public UUID usersid;
+        public String description;
 }
