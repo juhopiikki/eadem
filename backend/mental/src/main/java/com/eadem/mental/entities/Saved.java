@@ -2,6 +2,7 @@ package com.eadem.mental.entities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,46 @@ public class Saved {
           + "(savedid, usersid, recordid) "
           + "VALUES (?, ?, ?)",
          savedid, usersid, recordid
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public static List<Record> getByUserId(UUID userid) {
+    try {
+      return jdbcTemplate.query(
+              "SELECT * FROM record "
+                    + "WHERE recordid in (select recordid from saved where usersid=?)",
+              new Object[]{ userid },
+              new Record.RecordRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public static List<Saved> getTop(int count) {
+    try {
+      return jdbcTemplate.query(
+              "SELECT * FROM saved limit ?",
+              new Object[]{ count },
+              new Saved.SavedRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public static boolean delete(UUID savedid) {
+    try {
+      return jdbcTemplate.update(
+       "DELETE FROM saved "
+          + "WHERE savedid = ? ",
+        savedid
       ) > 0;
     } catch (DataAccessException e) {
       e.printStackTrace();

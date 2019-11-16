@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.sql.DataSource;
 
 import com.eadem.mental.wrappers.UserDescription;
+import com.eadem.mental.wrappers.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -96,4 +97,18 @@ public class Users {
     }
   }
 
+  public static boolean updateUserName(UserName userName) {
+    try {
+      return jdbcTemplate.update(
+    "UPDATE users "
+        + "SET description = ?"
+        + "WHERE usersid = ?",
+        userName.username,
+        userName.usersid
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }
