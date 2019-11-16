@@ -3,6 +3,7 @@ import { Platform, SafeAreaView, StatusBar, StyleSheet, View, TextInput, Text } 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
+import RecordItem from '../../components/RecordItem'
 
 
 const Me = () => {
@@ -32,6 +33,7 @@ const Me = () => {
                             My Shared Recordings
                         </Text>
                     </View>
+                    <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
                 </View>
             </KeyboardAwareScrollView>
         </>

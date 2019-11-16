@@ -9,22 +9,22 @@ class RecordItem extends Component {
         <View style={{
           //borderWidth: 2, 
           //borderColor: 'steelblue', 
-          height: 80, 
-          marginBottom: 10,
+          // height: 80, 
+          padding: 20,
           flexDirection: 'row',
-          borderRadius: 12,
-          alignItems: "center",
+          borderRadius: 5,
+          flex: 1,
+          alignItems: "flex-start",
           shadowColor: 'black',
           shadowOffset: { width: 1, height: 1 },
-          shadowOpacity: 2.8,
+          shadowOpacity: 0.8,
           shadowRadius: 12,
           elevation: 3
         }}>
           <View style={{
               flex: 5,
-              marginLeft: 20,
             }}>
-            <Text style={{fontWeight: 'bold', fontSize: 15}}>{this.props.recordName}</Text>
+            <Text style={{fontFamily: 'NunitoSans_bold', fontSize: 15}}>{this.props.recordName}</Text>
             <Text>{this.props.recordAuthor}</Text>
           </View>
           <IconButton
