@@ -15,6 +15,7 @@ function createScreenTree() {
                         bottomTabs: {
                             titleDisplayMode: 'alwaysShow',
                         },
+
                     },
                     children: [{
                         stack: {
@@ -30,7 +31,11 @@ function createScreenTree() {
                                     testID: 'FIRST_TAB_BAR_BUTTON',
                                     iconColor: colors.inactiveTab,
                                     selectedIconColor: colors.activeTab,
-                                }
+                                },
+                                topBar: {
+                                    visible: false,
+                                    drawBehind: true,
+                                },
                             }
                         }
                     },
@@ -48,7 +53,11 @@ function createScreenTree() {
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
-                                    }
+                                    },
+                                    topBar: {
+                                        visible: false,
+                                        drawBehind: true,
+                                    },
                                 }
                             }
                         }, {
@@ -65,7 +74,11 @@ function createScreenTree() {
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
-                                    }
+                                    },
+                                    topBar: {
+                                        visible: false,
+                                        drawBehind: true,
+                                    },
                                 }
                             }
                         }, {
@@ -82,7 +95,11 @@ function createScreenTree() {
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
-                                    }
+                                    },
+                                    topBar: {
+                                        visible: false,
+                                        drawBehind: true,
+                                    },
                                 }
                             }
                         },
