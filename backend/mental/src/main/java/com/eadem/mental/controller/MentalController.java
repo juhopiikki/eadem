@@ -3,8 +3,15 @@ package com.eadem.mental.controller;
 import java.util.UUID;
 
 import com.eadem.mental.wrappers.UserDescription;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.eadem.mental.entities.Record;
 import com.eadem.mental.entities.Saved;
 import com.eadem.mental.entities.Users;
@@ -83,6 +90,13 @@ public class MentalController {
       return record.create();
     }
     return false;
+  }
+
+  @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = {"multipart/form-data"})
+  public String uploadFile(
+      @RequestParam("audiofile") final MultipartFile file
+  ) {
+    return file.getOriginalFilename();
   }
 
 }
