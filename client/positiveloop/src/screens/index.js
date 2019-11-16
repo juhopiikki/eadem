@@ -8,6 +8,7 @@ import Test from './Test';
 import Record from './Record';
 import Me from './Me';
 import Loop from './Loop';
+import Saved from './Saved';
 
 function ReduxProvider(Component) {
   return props => (
@@ -23,6 +24,6 @@ function ReduxProvider(Component) {
 export default () => {
   Navigation.registerComponent('Loop', () => ReduxProvider(Loop), () => Loop);
   Navigation.registerComponent('Record', () => ReduxProvider(Record), () => Record);
-  Navigation.registerComponent('Saved', () => ReduxProvider(Test), () => Test);
+  Navigation.registerComponent('Saved', () => ReduxProvider(Saved), () => Saved);
   Navigation.registerComponent('Me', () => ReduxProvider(Me), () => Me);
 }

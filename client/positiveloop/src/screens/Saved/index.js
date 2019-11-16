@@ -6,37 +6,21 @@ import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
 
 
-const Me = () => {
+const Saved = () => {
     return (
         <>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
-                <View style={styles.info}>
+                <View style={styles.body}>
                     <View style={styles.titleRow}>
                         <Text style={styles.title}>
-                            My Profile
+                            Saved Recordings
                         </Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.inputTitle}>
-                            Name
-                        </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.inputTitle}>
-                            Little something about me
-                        </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
-                    </View>
-                </View>
-                <View style={styles.recordings}>
-                    <View style={styles.titleRow}>
-                        <Text style={styles.title}>
-                            My Shared Recordings
-                        </Text>
-                    </View>
+                    <RecordItem recordName="I love life" recordAuthor="Seppo" />
+                    <RecordItem recordName="Made my day" recordAuthor="Arttu" />
+                    <RecordItem recordName="Beer is good" recordAuthor="Maija" />
+                    <RecordItem recordName="Elämä on parasta huumetta" recordAuthor="Sirpa" />
                     <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
-                    <RecordItem recordName="Best day of my life" recordAuthor="Anonymous" />
                 </View>
             </KeyboardAwareScrollView>
         </>
@@ -50,17 +34,8 @@ const styles = StyleSheet.create({
         alignItems: "flex-start", 
         marginBottom: 40,
     },
-    info: {
-        paddingHorizontal: 40,
-        paddingVertical: 20,
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: Colors.white,
-    },
-    recordings: {
-        paddingHorizontal: 20,
-        paddingTop: 0,
-        paddingBottom: 20,
+    body: {
+        padding: 40,
         flex: 1,
         flexDirection: 'column',
         backgroundColor: Colors.white,
@@ -95,4 +70,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Me;
+export default Saved;
