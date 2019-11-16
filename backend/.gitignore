@@ -7,3 +7,10 @@ out/
 *.iws
 *.iml
 *.ipr
+
+mental/.classpath
+mental/.project
+mental/.settings/
+mental/bin/
+mental/build/
+
