@@ -55,6 +55,13 @@ public class MentalController {
     return false;
   }
 
+  @PostMapping("/users/getById")
+  public Users GetUser(
+      @RequestBody UUID userid
+  ) {
+    return Users.getById(userid);
+  }
+
   @PostMapping("/saved/create")
   public boolean createSaved(
       @RequestBody Saved saved
