@@ -11,7 +11,7 @@ Navigation.events().registerAppLaunchedListener(() => {
           stack: {
             children: [{
               component: {
-                name: 'TestScreen',
+                name: 'Listen',
                 passProps: {
                   text: 'This is tab 1'
                 }
@@ -20,7 +20,7 @@ Navigation.events().registerAppLaunchedListener(() => {
             options: {
               bottomTab: {
                 icon: require('./src/assets/test.png'),
-                text: 'Tab 1',
+                text: 'Listen',
                 testID: 'FIRST_TAB_BAR_BUTTON'
               }
             }
@@ -30,7 +30,7 @@ Navigation.events().registerAppLaunchedListener(() => {
             stack: {
               children: [{
                 component: {
-                  name: 'TestScreen',
+                  name: 'Record',
                   passProps: {
                     text: 'This is tab 1'
                   }
@@ -39,7 +39,43 @@ Navigation.events().registerAppLaunchedListener(() => {
               options: {
                 bottomTab: {
                   icon: require('./src/assets/test.png'),
-                  text: 'Tab 1',
+                  text: 'Record',
+                  testID: 'FIRST_TAB_BAR_BUTTON'
+                }
+              }
+            }
+          },{
+            stack: {
+              children: [{
+                component: {
+                  name: 'Saved',
+                  passProps: {
+                    text: 'This is tab 1'
+                  }
+                }
+              }],
+              options: {
+                bottomTab: {
+                  icon: require('./src/assets/test.png'),
+                  text: 'Saved',
+                  testID: 'FIRST_TAB_BAR_BUTTON'
+                }
+              }
+            }
+          },{
+            stack: {
+              children: [{
+                component: {
+                  name: 'Me',
+                  passProps: {
+                    text: 'This is tab 1'
+                  }
+                }
+              }],
+              options: {
+                bottomTab: {
+                  icon: require('./src/assets/test.png'),
+                  text: 'Me',
                   testID: 'FIRST_TAB_BAR_BUTTON'
                 }
               }

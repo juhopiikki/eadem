@@ -18,5 +18,8 @@ function ReduxProvider(Component) {
 
 
 export default () => {
-    Navigation.registerComponent('TestScreen', () => ReduxProvider(App), () => App);
+    Navigation.registerComponent('Listen', () => ReduxProvider(App), () => App);
+    Navigation.registerComponent('Record', () => ReduxProvider(App), () => App);
+    Navigation.registerComponent('Saved', () => ReduxProvider(App), () => App);
+    Navigation.registerComponent('Me', () => ReduxProvider(App), () => App);
 }
