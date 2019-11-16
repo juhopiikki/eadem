@@ -41,20 +41,6 @@ public class Record {
 
   }
 
-  public static class RecordRowListMapper implements RowMapper<Record> {
-    @Override
-    public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
-      final Record record = new Record();
-      record.recordid = rs.getObject("recordid", UUID.class);
-      record.usersid = rs.getObject("usersid", UUID.class);
-      record.likecount = rs.getInt("likecount");
-      record.filepath = rs.getString("filepath");
-      record.title = rs.getString("title");
-      return record;
-    }
-
-  }
-
   public static Record getById(UUID id) {
     try {
       return jdbcTemplate.queryForObject(

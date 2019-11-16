@@ -87,6 +87,27 @@ public class MentalController {
     return false;
   }
 
+  @PostMapping("/saved/getTop")
+  public List<Saved> getTopSaved(
+    @RequestBody int count
+  ) {
+    return Saved.getTop(count);
+  }
+
+  @PostMapping("/saved/getSaved")
+  public List<Record> createSaved(
+    @RequestBody UUID userid
+  ) {
+    return Saved.getByUserId(userid);
+  }
+
+  @PostMapping("/saved/delete")
+  public boolean deleteSaved(
+      @RequestBody UUID savedid
+  ) {
+    return Saved.delete(savedid);
+  }
+
   @PostMapping("/record/create")
   public boolean createRecord(
       @RequestBody Record record
