@@ -8,7 +8,7 @@ import RecordItem from '../../components/RecordItem'
 
 const Saved = () => {
     return (
-        <>
+        <View style={styles.main}>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
                 <View style={styles.body}>
                     <View style={styles.titleRow}>
@@ -23,15 +23,19 @@ const Saved = () => {
                     <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
                 </View>
             </KeyboardAwareScrollView>
-        </>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
     row: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: "flex-start", 
+        alignItems: "flex-start",
         marginBottom: 40,
     },
     body: {
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         height: 40,
         width: '100%',
-        borderBottomColor: '#000000', 
+        borderBottomColor: '#000000',
         borderBottomWidth: 1,
         backgroundColor: colors.backgroundColor,
         paddingLeft: 0,
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
     titleRow: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: "center", 
+        alignItems: "center",
         marginBottom: 20,
     },
     title: {

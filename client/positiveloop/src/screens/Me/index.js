@@ -19,7 +19,7 @@ const Me = (props) => {
     const setUserDescriptionToRedux = props.setUserDescription
 
     return (
-        <>
+        <View style={styles.main}>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
                 <View style={styles.info}>
                     <View style={styles.titleRow}>
@@ -58,7 +58,7 @@ const Me = (props) => {
                     <RecordItem recordName="Best day of my life" recordAuthor="Anonymous" />
                 </View>
             </KeyboardAwareScrollView>
-        </>
+        </View>
     );
 };
 
@@ -70,6 +70,10 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { setUserName, setUserDescription })(Me);
 
 const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: colors.background
+    },
     row: {
         flex: 1,
         flexDirection: 'column',
