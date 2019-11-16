@@ -65,4 +65,18 @@ public class Users {
     }
   }
 
+  public boolean create() {
+    try {
+      return jdbcTemplate.update(
+          "INSERT INTO users "
+          + "(usersid, username, location, description) "
+          + "VALUES (?, ?, ?, ?)",
+         usersid, username, location, description
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
 }

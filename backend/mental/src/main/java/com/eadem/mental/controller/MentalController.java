@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +43,36 @@ public class MentalController {
   @GetMapping("/random/users")
   public Users randomUsers() {
     return Users.getRandom();
+  }
+
+  @PostMapping("/users/create")
+  public boolean createUsers(
+      @RequestBody Users user
+  ) {
+    if (user != null) {
+      return user.create();
+    }
+    return false;
+  }
+
+  @PostMapping("/saved/create")
+  public boolean createSaved(
+      @RequestBody Saved saved
+  ) {
+    if (saved != null) {
+      return saved.create();
+    }
+    return false;
+  }
+
+  @PostMapping("/record/create")
+  public boolean createRecord(
+      @RequestBody Record record
+  ) {
+    if (record != null) {
+      return record.create();
+    }
+    return false;
   }
 
 }

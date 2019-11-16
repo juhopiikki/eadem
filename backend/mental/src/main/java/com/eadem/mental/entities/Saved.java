@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 public class Saved {
 
   public UUID savedid = UUID.randomUUID();
+  public UUID usersid = null;
+  public UUID recordid = null;
 
   private static JdbcTemplate jdbcTemplate;
 
@@ -27,9 +29,10 @@ public class Saved {
     public Saved mapRow(ResultSet rs, int rowNum) throws SQLException {
       final Saved saved = new Saved();
       saved.savedid = rs.getObject("savedid", UUID.class);
+      saved.usersid = rs.getObject("usersid", UUID.class);
+      saved.recordid = rs.getObject("recordid", UUID.class);
       return saved;
     }
-    
   }
 
   public static Saved getById(UUID id) {
@@ -59,4 +62,17 @@ public class Saved {
     }
   }
 
+  public boolean create() {
+    try {
+      return jdbcTemplate.update(
+          "INSERT INTO saved "
+          + "(savedid, usersid, recordid) "
+          + "VALUES (?, ?, ?)",
+         savedid, usersid, recordid
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

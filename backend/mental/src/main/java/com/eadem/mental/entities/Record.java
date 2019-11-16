@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 public class Record {
 
   public UUID recordid = UUID.randomUUID();
+  public UUID usersid = null;
+  public int likecount = 0;
+  public String filepath = "";
 
   private static JdbcTemplate jdbcTemplate;
 
@@ -27,6 +30,9 @@ public class Record {
     public Record mapRow(ResultSet rs, int rowNum) throws SQLException {
       final Record record = new Record();
       record.recordid = rs.getObject("recordid", UUID.class);
+      record.usersid = rs.getObject("usersid", UUID.class);
+      record.likecount = rs.getInt("likecount");
+      record.filepath = rs.getString("filepath");
       return record;
     }
     
@@ -56,6 +62,20 @@ public class Record {
     } catch (DataAccessException e) {
       e.printStackTrace();
       return null;
+    }
+  }
+
+  public boolean create() {
+    try {
+      return jdbcTemplate.update(
+          "INSERT INTO record "
+          + "(recordid, usersid, likecount, filepath) "
+          + "VALUES (?, ?, ?, ?)",
+         recordid, usersid, likecount, filepath
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
     }
   }
 }
