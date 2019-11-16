@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import { Component } from 'react';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const API_ENDPOINTS = "http://54.229.97.181:8080/mental";
 
@@ -345,5 +346,27 @@ export default class API extends Component {
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
+  /**
+   * Upload audio recording
+   * * */
+  static uploadudio(uri, fileName, cb) {
+    var file = {
+      name: 'audiofile',
+      filename: 'audiofile',
+      data: RNFetchBlob.wrap(uri)
+    };
+
+    // let formdata = new FormData();
+    // formdata.append("audiofile", file);
+    RNFetchBlob.fetch('POST', API_ENDPOINTS + '/file/upload', {
+      'Content-Type': "multipart/form-data",
+    }, [
+      file
+    ])
+      .then((response) => cb(response.data))
+      .catch((err) => {
+        console.log('Error in adding a comment' + err);
+      })
+  }
 }
 
