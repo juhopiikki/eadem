@@ -1,14 +1,52 @@
 import {Navigation} from 'react-native-navigation';
-import App from './App';
+import registerScreens from './src/screens'
 
-Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => App);
+registerScreens()
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {
-      component: {
-        name: 'navigation.playground.WelcomeScreen',
-      },
-    },
+      bottomTabs: {
+        children: [{
+          stack: {
+            children: [{
+              component: {
+                name: 'TestScreen',
+                passProps: {
+                  text: 'This is tab 1'
+                }
+              }
+            }],
+            options: {
+              bottomTab: {
+                icon: require('./src/assets/test.png'),
+                text: 'Tab 1',
+                testID: 'FIRST_TAB_BAR_BUTTON'
+              }
+            }
+          }
+        },
+          {
+            stack: {
+              children: [{
+                component: {
+                  name: 'TestScreen',
+                  passProps: {
+                    text: 'This is tab 1'
+                  }
+                }
+              }],
+              options: {
+                bottomTab: {
+                  icon: require('./src/assets/test.png'),
+                  text: 'Tab 1',
+                  testID: 'FIRST_TAB_BAR_BUTTON'
+                }
+              }
+            }
+          },
+          ]
+      }
+    }
   });
 });
