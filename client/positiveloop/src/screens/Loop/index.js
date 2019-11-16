@@ -38,72 +38,227 @@ class Loop extends Component {
         const {trackId, author, title, about, getSavedRecords: getSaved} = this.props;
         const {playing, liked} = this.state;
         return (
-            <View style={styles.pageContainer}>
-                <View style={styles.infoContainer}>
-                <Text style={styles.titleText}>
-                    {title || '--'}
-                </Text>
-                <Text style={styles.sharedText}>
-                    {trackId ? 'Shared by' : null}
-                </Text>
-                <Text style={styles.authorText}>
-                    {author || '--'}
-                </Text>
-                <Text>
-                    {about || '--'}
-                </Text>
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingBottom: 5,
+                paddingTop: 60
+            }}>
+
+                <View style={{
+                    flex: 6,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    // backgroundColor: 'skyblue',
+                    marginHorizontal: 20
+                }}>
+                    <Text style={{
+                        fontFamily: 'NunitoSans_bold',
+                        padding: 0,
+                        fontSize: 34,
+                    }}>
+                        {title || 'Good vibes'}
+                    </Text>
+                    <Text style={{
+                        fontFamily: 'NunitoSans',
+                        padding: 5,
+                        fontSize: 14,
+                    }}>
+                        {trackId ? 'Shared by' : 'Shared by'}
+                    </Text>
+                    <Text style={{
+                        fontFamily: 'NunitoSans_bold',
+                        padding: 0,
+                        fontSize: 20,
+                    }}>
+                        {author || 'Anonymous'}
+                    </Text>
+                    <Text style={{
+                        fontFamily: 'NunitoSans_italic',
+                        padding: 5,
+                        fontSize: 16,
+                        textAlign: 'center',
+                        marginHorizontal: 30
+                    }}>
+                        {about || 'I love animals and shit. I spread love, please follow me on instagram.'}
+                    </Text>
                 </View>
-                <View style={styles.trackContainer}>
+
+
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
                     <ProgressBar
                         visible={true}
                         progress={0.5}
-                        color={'black'}
-                        style={{height: 10, width: 300}}
+                        color={'#F83E81'}
+                        style={{height: 8, width: 300}}
                     />
                 </View>
-                <View style={styles.skipButtonContainer}>
-                    <IconButton
-                        icon="rewind-10"
-                        color={'black'}
-                        size={40}
-                        onPress={() => console.log('Pressed')}
-                    />
-                    <IconButton
-                        icon="play"
-                        color={'black'}
-                        size={40}
-                        onPress={() => console.log('Pressed')}
-                    />
-                    <IconButton
-                        icon="fast-forward-10"
-                        color={'black'}
-                        size={40}
-                        onPress={() => console.log('Pressed')}
-                    />
-                </View>
-                <View style={styles.playContainer}>
-                    <IconButton
-                        icon={liked ? "heart" : "heart-outline"}
-                        color={'black'}
-                        size={36}
-                        onPress={() => {if (!liked){
-                            this.likeCurrentTrack()
-                        } }}
-                    />
 
-                    <IconButton
-                        icon="skip-next"
-                        color={'black'}
-                        size={36}
-                        onPress={() => console.log('Pressed')}
-                    />
-                    <IconButton
-                        icon="content-save"
-                        color={'black'}
-                        size={36}
-                        onPress={() => getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
-                    />
+                {/* Control wrapper */}
+                <View style={{
+                    // backgroundColor: 'skyblue',
+                    flex: 8,
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    paddingHorizontal: 30,
+                    marginBottom: 20
+                }}>
+                
+
+                    {/* Forward backward buttons */}
+                    <View style={{
+                        // backgroundColor: 'skyblue',
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingHorizontal: 30,
+                        marginBottom: 20
+                    }}>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/backward.png')}
+                                color={'black'}
+                                size={40}
+                                onPress={() => console.log('Pressed')}
+                            />
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/forward.png')}
+                                color={'black'}
+                                size={40}
+                                onPress={() => console.log('Pressed')}
+                            />
+                        </View>
+                    </View>
+                    
+                    
+                    
+                    
+                    
+                    {/* Save play next buttons */}
+                    <View style={{
+                        // backgroundColor: 'skyblue',
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                        marginBottom: 25
+                    }}>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/save.png')}
+                                color={'black'}
+                                size={36}
+                                onPress={() => getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
+                            />
+                            <Text style={[styles.tinyLabel, {
+                                bottom: -5
+                            }]}>
+                                Save
+                            </Text>
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/play.png')}
+                                color={'#F83E81'}
+                                size={75}
+                                onPress={() => console.log('Pressed')}
+                            />
+                            <Text style={styles.tinyLabel}>
+                                Play
+                            </Text>
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/next.png')}
+                                color={'black'}
+                                size={36}
+                                onPress={() => console.log('Pressed')}
+                            />
+                            <Text style={[styles.tinyLabel, {
+                                bottom: -5
+                            }]}>
+                                Next
+                            </Text>
+                        </View>
+                    </View>
+                    
+                    
+                    
+                    
+                    {/* Like button */}
+                    <View style={{
+                        // backgroundColor: 'skyblue',
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                        marginBottom: 20
+                    }}>
+                        {liked ?
+                        <IconButton
+                            icon={require('../../assets/images/liked.png')}
+                            color={'#F83E81'}
+                            size={36}
+                        />
+                        :
+                        <IconButton
+                            icon={require('../../assets/images/like.png')}
+                            color={'black'}
+                            size={36}
+                            onPress={() => this.likeCurrentTrack()}
+                        />}
+                        <Text style={[styles.tinyLabel, {
+                                bottom: -5
+                            }]}>
+                            {liked ? 'Liked!' : 'Like'}
+                        </Text>
+                    </View>
+
                 </View>
+
             </View>
         );
     }
@@ -140,8 +295,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingHorizontal: 15,
         paddingVertical: 20,
-        justifyContent: "space-between",
-        alignItems: "center",
+        // justifyContent: "space-between",
+        // alignItems: "center",
     },
     infoContainer: {
         flex: 3,
@@ -178,5 +333,14 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "stretch",
         paddingVertical: 0,
+    },
+
+
+
+    tinyLabel: {
+        fontFamily: 'NunitoSans',
+        fontSize: 12,
+        position: 'absolute',
+        bottom: 5
     }
 });
