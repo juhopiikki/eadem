@@ -101,7 +101,7 @@ public class Users {
     try {
       return jdbcTemplate.update(
     "UPDATE users "
-        + "SET description = ?"
+        + "SET username = ?"
         + "WHERE usersid = ?",
         userName.username,
         userName.usersid

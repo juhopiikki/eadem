@@ -1,13 +1,13 @@
 package com.eadem.mental.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import com.eadem.mental.wrappers.CreateRecord;
+import com.eadem.mental.wrappers.RecordWithUsers;
 import com.eadem.mental.wrappers.UserDescription;
 import com.eadem.mental.wrappers.UserName;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,8 +42,16 @@ public class MentalController {
   }
 
   @GetMapping("/random/record")
-  public Record randomRecord() {
-    return Record.getRandom();
+  public RecordWithUsers randomRecord() {
+    final RecordWithUsers rwu = new RecordWithUsers();
+    rwu.record = Record.getRandom();
+    if (rwu.record != null && rwu.record.usersid != null) {
+      final Users u = Users.getById(rwu.record.usersid);
+      if (u != null) {
+        rwu.user = u;
+      }
+    }
+    return rwu;
   }
 
   @GetMapping("/random/saved")
@@ -107,10 +115,23 @@ public class MentalController {
   }
 
   @PostMapping("/saved/getSaved")
-  public List<Record> createSaved(
+  public List<RecordWithUsers> createSaved(
     @RequestBody UUID userid
   ) {
-    return Saved.getByUserId(userid);
+    final List<Record> records
+        = Saved.getByUserId(userid);
+    final List<RecordWithUsers> tmpList
+        = new ArrayList<>();
+    for (Record record : records) {
+      final RecordWithUsers tmp
+          = new RecordWithUsers();
+      tmp.record = record;
+      if (record.usersid != null) {
+        tmp.user = Users.getById(record.usersid);
+      }
+      tmpList.add(tmp);
+    }
+    return tmpList;
   }
 
   @PostMapping("/saved/delete")
@@ -144,24 +165,58 @@ public class MentalController {
   }
 
   @PostMapping("/record/getTop")
-  public List<Record> getTop(
+  public List<RecordWithUsers> getTop(
           @RequestBody int count
   ) {
-    return Record.getTop(count);
+    final List<Record> records
+        = Record.getTop(count);
+    final List<RecordWithUsers> tmpList
+        = new ArrayList<>();
+    for (Record record : records) {
+      final RecordWithUsers tmp
+          = new RecordWithUsers();
+      tmp.record = record;
+      if (record.usersid != null) {
+        tmp.user = Users.getById(record.usersid);
+      }
+      tmpList.add(tmp);
+    }
+    return tmpList;
   }
 
   @PostMapping("/record/getById")
-  public Record GetRecord(
+  public RecordWithUsers GetRecord(
       @RequestBody UUID recordid
   ) {
-    return Record.getById(recordid);
+    final RecordWithUsers rwu = new RecordWithUsers();
+    rwu.record = Record.getById(recordid);
+    if (rwu.record != null && rwu.record.usersid != null) {
+      final Users u = Users.getById(rwu.record.usersid);
+      if (u != null) {
+        rwu.user = u;
+      }
+    }
+    return rwu;
   }
 
   @PostMapping("/record/getByUserId")
-  public List<Record> GetRecordByUserId(
+  public List<RecordWithUsers> GetRecordByUserId(
       @RequestBody UUID userid
   ) {
-    return Record.getByUserId(userid);
+    final List<Record> records
+        = Record.getByUserId(userid);
+    final List<RecordWithUsers> tmpList
+        = new ArrayList<>();
+    for (Record record : records) {
+      final RecordWithUsers tmp
+          = new RecordWithUsers();
+      tmp.record = record;
+      if (record.usersid != null) {
+        tmp.user = Users.getById(record.usersid);
+      }
+      tmpList.add(tmp);
+    }
+    return tmpList;
   }
 
   @PostMapping("/record/deleteById")
@@ -173,7 +228,7 @@ public class MentalController {
 
   @GetMapping(
       value = "/file/{filesid}",
-      produces = MediaType.IMAGE_PNG_VALUE
+      produces = "audio/aac"
   )
   public @ResponseBody byte[] getFile(
     @PathVariable("filesid") UUID filesId
