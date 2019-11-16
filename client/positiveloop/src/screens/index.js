@@ -6,6 +6,7 @@ import store from '../store/store'
 
 import Test from './Test';
 import Record from './Record';
+import Me from './Me';
 import Loop from './Loop';
 
 function ReduxProvider(Component) {
@@ -23,5 +24,5 @@ export default () => {
   Navigation.registerComponent('Loop', () => ReduxProvider(Loop), () => Loop);
   Navigation.registerComponent('Record', () => ReduxProvider(Record), () => Record);
   Navigation.registerComponent('Saved', () => ReduxProvider(Test), () => Test);
-  Navigation.registerComponent('Me', () => ReduxProvider(Test), () => Test);
+  Navigation.registerComponent('Me', () => ReduxProvider(Me), () => Me);
 }
