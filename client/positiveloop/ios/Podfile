@@ -36,6 +36,10 @@ target 'positiveloop' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'ReactNativeAudioToolkit', :path => '../node_modules/@react-native-community/audio-toolkit'
+
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   target 'positiveloopTests' do
     inherit! :search_paths
     # Pods for testing

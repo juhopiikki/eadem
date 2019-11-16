@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.rctaudiotoolkit.AudioPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -19,6 +20,7 @@ import com.reactnativenavigation.react.ReactGateway;
 
 import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
 import com.reactnativecommunity.rctaudiotoolkit.AudioPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -42,8 +44,9 @@ public class MainApplication extends NavigationApplication {
                 // Add additional packages you require here
                                 return Arrays.<ReactPackage>asList(
                                     new AsyncStoragePackage(),
-                                    new RNUUIDGeneratorPackage()
-                                    // new AudioPackage()
+                                    new RNUUIDGeneratorPackage(),
+                                    new AudioPackage(),
+                                    new RNFetchBlobPackage()
                                 );
             }
 
