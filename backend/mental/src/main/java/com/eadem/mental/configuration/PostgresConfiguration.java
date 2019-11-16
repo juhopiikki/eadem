@@ -14,7 +14,7 @@ public class PostgresConfiguration {
   public DataSource dataSource() {
     return DataSourceBuilder.create()
       .driverClassName("org.postgresql.Driver")
-      .url("jdbc:mysql://localhost:5432/mental")
+      .url("jdbc:postgresql://localhost:5432/mental")
       .username("mental")
       .password("mental")
       .build(); 

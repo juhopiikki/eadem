@@ -46,4 +46,17 @@ public class Users {
     }
   }
 
+  public static Users getRandom() {
+    try {
+      return jdbcTemplate.queryForObject(
+          "SELECT * FROM users ORDER BY random() LIMIT 1",
+          new Object[]{ }, 
+          new UsersRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
 }

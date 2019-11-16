@@ -46,4 +46,17 @@ public class Saved {
     }
   }
 
+  public static Saved getRandom() {
+    try {
+      return jdbcTemplate.queryForObject(
+          "SELECT * FROM saved ORDER BY random() LIMIT 1",
+          new Object[]{ }, 
+          new SavedRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
 }

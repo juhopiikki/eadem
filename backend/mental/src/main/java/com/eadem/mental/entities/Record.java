@@ -45,4 +45,17 @@ public class Record {
       return null;
     }
   }
+
+  public static Record getRandom() {
+    try {
+      return jdbcTemplate.queryForObject(
+          "SELECT * FROM record ORDER BY random() LIMIT 1",
+          new Object[]{ }, 
+          new RecordRowMapper()
+      );
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }
