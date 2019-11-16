@@ -34,6 +34,18 @@ class Loop extends Component {
         }
     }
 
+    play = () => {
+        this.setState({
+            playing: true
+        })
+    }
+
+    pause = () => {
+        this.setState({
+            playing: false
+        })
+    }
+
     render() {
         const {trackId, author, title, about, getSavedRecords: getSaved} = this.props;
         const {playing, liked} = this.state;
@@ -60,22 +72,26 @@ class Loop extends Component {
                         padding: 0,
                         fontSize: 34,
                     }}>
-                        {title || 'Good vibes'}
+                        {title || ''}
                     </Text>
+                    {author &&
+                    <>
                     <Text style={{
                         fontFamily: 'NunitoSans',
                         padding: 5,
                         fontSize: 14,
                     }}>
-                        {trackId ? 'Shared by' : 'Shared by'}
+                        {author ? 'Shared by' : ''}
                     </Text>
                     <Text style={{
                         fontFamily: 'NunitoSans_bold',
                         padding: 0,
                         fontSize: 20,
                     }}>
-                        {author || 'Anonymous'}
+                        {author || ''}
                     </Text>
+                    </>}
+                    {(author && about) &&
                     <Text style={{
                         fontFamily: 'NunitoSans_italic',
                         padding: 5,
@@ -83,8 +99,8 @@ class Loop extends Component {
                         textAlign: 'center',
                         marginHorizontal: 30
                     }}>
-                        {about || 'I love animals and shit. I spread love, please follow me on instagram.'}
-                    </Text>
+                        {about || ''}
+                    </Text>}
                 </View>
 
 
@@ -193,14 +209,22 @@ class Loop extends Component {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
+                            {playing ?
+                            <IconButton
+                                icon={require('../../assets/images/pause.png')}
+                                color={'#F83E81'}
+                                size={75}
+                                onPress={() => this.pause()}
+                            />
+                            :
                             <IconButton
                                 icon={require('../../assets/images/play.png')}
                                 color={'#F83E81'}
                                 size={75}
-                                onPress={() => console.log('Pressed')}
-                            />
+                                onPress={() => this.play()}
+                            />}
                             <Text style={styles.tinyLabel}>
-                                Play
+                                {playing ? 'Pause' : 'Play'}
                             </Text>
                         </View>
                         <View style={{
