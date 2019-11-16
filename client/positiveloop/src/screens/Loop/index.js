@@ -61,20 +61,20 @@ class Loop extends Component {
             }}>
 
                 <View style={{
-                    backgroundColor: 'skyblue',
                     height: 60,
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    width: '100%'
+                    width: '100%',
+                    marginBottom: 10
                 }}>
                     <Image
                         style={{
-                            height: 30,
+                            height: 14,
                             width: '100%',
                             resizeMode: 'contain'
                         }}
-                        source={require('../../assets/images/backward.png')}
+                        source={require('../../assets/images/logo.png')}
                     />
                 </View>
 
