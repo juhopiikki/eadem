@@ -84,9 +84,9 @@ public class Record {
     try {
       return jdbcTemplate.update(
           "INSERT INTO record "
-          + "(recordid, usersid, likecount, filesid) "
-          + "VALUES (?, ?, ?, ?)",
-         recordid, usersid, likecount, filesid
+          + "(recordid, usersid, filesid, title, likecount) "
+          + "VALUES (?, ?, ?, ?, ?)",
+         recordid, usersid, filesid, title, likecount
       ) > 0;
     } catch (DataAccessException e) {
       e.printStackTrace();

@@ -126,6 +126,7 @@ public class MentalController {
   ) {
     if (record != null) {
       final Record tmp = new Record();
+      tmp.usersid = record.usersid;
       tmp.filesid = record.filesid;
       tmp.title = record.title;
       if (tmp.create()) {
