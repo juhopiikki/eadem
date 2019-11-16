@@ -10,7 +10,7 @@ const Me = () => {
     return (
         <>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
-                <View style={styles.body}>
+                <View style={styles.info}>
                     <View style={styles.titleRow}>
                         <Text style={styles.title}>
                             My Profile
@@ -28,12 +28,15 @@ const Me = () => {
                         </Text>
                         <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
                     </View>
+                </View>
+                <View style={styles.recordings}>
                     <View style={styles.titleRow}>
                         <Text style={styles.title}>
                             My Shared Recordings
                         </Text>
                     </View>
                     <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
+                    <RecordItem recordName="Best day of my life" recordAuthor="Anonymous" />
                 </View>
             </KeyboardAwareScrollView>
         </>
@@ -47,8 +50,17 @@ const styles = StyleSheet.create({
         alignItems: "flex-start", 
         marginBottom: 40,
     },
-    body: {
-        padding: 40,
+    info: {
+        paddingHorizontal: 40,
+        paddingVertical: 20,
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: Colors.white,
+    },
+    recordings: {
+        paddingHorizontal: 20,
+        paddingTop: 0,
+        paddingBottom: 20,
         flex: 1,
         flexDirection: 'column',
         backgroundColor: Colors.white,
