@@ -7,11 +7,6 @@ import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
 import { setUserName, setUserDescription } from '../../store/actions'
 
-/*const userNameToState(userName) {
-  console.log("Set username to redux and backend");
-  setUserName(userName);
-}*/
-
 const Me = (props) => {
     const [userName, onChangeUserName] = React.useState(props.userName);
     const [description, onChangeDesc] = React.useState(props.userdescription);
