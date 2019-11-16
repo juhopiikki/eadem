@@ -6,7 +6,7 @@
 
 `http://localhost:8080/mental/status`
 
-# Create
+# Operations
 
 ## User
 
@@ -14,7 +14,23 @@
 curl localhost:8080/mental/users/create \
   -H "Content-Type: application/json" \
   -X POST \
-  -d '{"username":"User","location":"Something","description":"Citizen of earth"}"'
+  -d '{"username":"User","location":"Something","description":"Citizen of earth"}'
+```
+
+Get user by id
+```
+curl localhost:8080/mental/users/getById \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '"d97b8baa-b626-4615-b142-fa6687887bfa"'
+```
+
+Update user description
+```
+curl localhost:8080/mental/users/getById \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '{"usersid":"d97b8baa-b626-4615-b142-fa6687887bfa","description":"Citizen of earth"}'
 ```
 
 ## Record
@@ -26,6 +42,22 @@ curl localhost:8080/mental/record/create \
   -d '{"usersid":"USERS_ID_HERE"}"'
 ```
 
+Increase record like by one
+```
+curl localhost:8080/mental/record/likeIncrease \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '"record-id-here"'
+```
+
+Get top n records
+```
+curl localhost:8080/mental/record/getTop \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '10'
+```
+
 ## Saved
 
 ```
@@ -33,4 +65,28 @@ curl localhost:8080/mental/saved/create \
   -H "Content-Type: application/json" \
   -X POST \
   -d '{"usersid":"USERS_ID_HERE", "recordid":"RECORD_ID_HERE"}"'
+```
+
+Get top n saved
+```
+curl localhost:8080/mental/saved/getTop \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '10'
+```
+
+Get users saved Records
+```
+curl localhost:8080/mental/saved/getSaved \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '"USERS_ID_HERE"'
+```
+
+Delete saved record from users saved
+```
+curl localhost:8080/mental/saved/delete \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '"SAVED_ID_HERE"'
 ```
