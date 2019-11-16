@@ -2,12 +2,8 @@ package com.eadem.mental.controller;
 
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.eadem.mental.wrappers.UserDescription;
+import org.springframework.web.bind.annotation.*;
 
 import com.eadem.mental.entities.Record;
 import com.eadem.mental.entities.Saved;
@@ -60,6 +56,13 @@ public class MentalController {
       @RequestBody UUID userid
   ) {
     return Users.getById(userid);
+  }
+
+  @PostMapping("/users/updateDescription")
+  public boolean UpdateDescription(
+      @RequestBody UserDescription userDescription
+  ) {
+    return Users.updateDescription(userDescription);
   }
 
   @PostMapping("/saved/create")

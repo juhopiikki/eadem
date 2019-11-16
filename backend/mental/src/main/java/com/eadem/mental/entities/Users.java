@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 import javax.sql.DataSource;
+
+import com.eadem.mental.wrappers.UserDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -72,6 +74,21 @@ public class Users {
           + "(usersid, username, location, description) "
           + "VALUES (?, ?, ?, ?)",
          usersid, username, location, description
+      ) > 0;
+    } catch (DataAccessException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public static boolean updateDescription(UserDescription userDescription) {
+    try {
+      return jdbcTemplate.update(
+        "UPDATE users "
+          + "SET description = ?"
+          + "WHERE usersid = ?",
+              userDescription.description,
+              userDescription.usersid
       ) > 0;
     } catch (DataAccessException e) {
       e.printStackTrace();
