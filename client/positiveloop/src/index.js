@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import AsyncStorage from '@react-native-community/async-storage';
 import UUIDGenerator from 'react-native-uuid-generator';
@@ -21,20 +22,27 @@ function createScreenTree() {
                         stack: {
                             children: [{
                                 component: {
-                                    name: 'Listen',
-                                }
+                                    name: 'Loop',
+                                    options: {
+                                        topBar: {
+                                            visible: Platform.OS === 'ios',
+                                            drawBehind: true,
+                                            title: {
+                                                text: 'Loop',
+                                                fontWeight: 'bold',
+                                            },
+                                        },
+                                    }
+                                },
+
                             }],
                             options: {
                                 bottomTab: {
                                     icon: require('./assets/test.png'),
-                                    text: 'Listen',
+                                    text: 'Loop',
                                     testID: 'FIRST_TAB_BAR_BUTTON',
                                     iconColor: colors.inactiveTab,
                                     selectedIconColor: colors.activeTab,
-                                },
-                                topBar: {
-                                    visible: false,
-                                    drawBehind: true,
                                 },
                             }
                         }
@@ -44,6 +52,16 @@ function createScreenTree() {
                                 children: [{
                                     component: {
                                         name: 'Record',
+                                        options: {
+                                            topBar: {
+                                                visible: Platform.OS === 'ios',
+                                                drawBehind: true,
+                                                title: {
+                                                    text: 'Record',
+                                                    fontWeight: 'bold',
+                                                },
+                                            },
+                                        }
                                     }
                                 }],
                                 options: {
@@ -65,6 +83,16 @@ function createScreenTree() {
                                 children: [{
                                     component: {
                                         name: 'Saved',
+                                        options: {
+                                            topBar: {
+                                                visible: Platform.OS === 'ios',
+                                                drawBehind: true,
+                                                title: {
+                                                    text: 'Saved',
+                                                    fontWeight: 'bold',
+                                                },
+                                            },
+                                        }
                                     }
                                 }],
                                 options: {
@@ -86,6 +114,16 @@ function createScreenTree() {
                                 children: [{
                                     component: {
                                         name: 'Me',
+                                        options: {
+                                            topBar: {
+                                                visible: Platform.OS === 'ios',
+                                                drawBehind: true,
+                                                title: {
+                                                    text: 'Me',
+                                                    fontWeight: 'bold',
+                                                },
+                                            },
+                                        }
                                     }
                                 }],
                                 options: {
