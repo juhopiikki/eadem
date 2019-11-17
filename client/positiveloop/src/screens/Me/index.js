@@ -49,8 +49,11 @@ const Me = (props) => {
                             My Shared Recordings
                         </Text>
                     </View>
-                    <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
-                    <RecordItem recordName="Best day of my life" recordAuthor="Anonymous" />
+                    {
+                        props.myRecords.map((recordItem) => (
+                            <RecordItem key={recordItem.record.recordid} recordName={recordItem.record.title} recordAuthor={recordItem.user.username} about={recordItem.user.description} />
+                        ))
+                    }
                 </View>
             </KeyboardAwareScrollView>
         </View>
@@ -60,6 +63,7 @@ const Me = (props) => {
 const mapStateToProps = state => ({
   userName: state.userName,
   userdescription: state.userdescription,
+  myRecords: state.myRecords,
 });
 
 export default connect(mapStateToProps, { setUserName, setUserDescription })(Me);
