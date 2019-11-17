@@ -4,6 +4,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { ProgressBar, Button, IconButton, TouchableRipple } from 'react-native-paper';
 import colors from "../../assets/colors";
 import AudioRecorder from '../../utils/AudioRecorder';
+import AudioPlayer from '../../utils/AudioPlayer';
+import API from '../../utils/api';
+import { getUserKey } from '../../index';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -26,12 +29,12 @@ function useInterval(callback, delay) {
 }
 
 export default Record = () => {
-    const audioRecorder = new AudioRecorder();
     const [title, setTitle] = React.useState('');
     const [isPlaying, setIsPlaying] = useState(false);
     const [isRecording, setIsRecording] = useState(false);
     const [hasRecorded, sethasRecorded] = useState(false);
     const [timeRecorded, setTimeRecorded] = useState(0);
+    const [recordFileId, setRecordFileId] = useState('');
 
 
     useInterval(() => {
@@ -40,22 +43,26 @@ export default Record = () => {
 
     const play = () => {
       setIsPlaying(true)
+      if (recordFileId) {
+        AudioPlayer.playFile(recordFileId);
+      }
     }
 
     const pause = () => {
       setIsPlaying(false)
+      AudioPlayer.pause();
     }
 
     const record = () => {
       setIsRecording(true)
-      // audioRecorder.record()
+      AudioRecorder.record()
     }
 
     const stopRecord = () => {
       setIsRecording(false)
       sethasRecorded(true)
       setTimeRecorded(0)
-      // audioRecorder.record()
+      setRecordFileId(AudioRecorder.stop());
     }
 
     const restartRecording = () => {
@@ -63,7 +70,12 @@ export default Record = () => {
       sethasRecorded(false)
       setTimeRecorded(0)
       setIsPlaying(false)
-      // audioRecorder.record()
+      setRecordFileId('');
+    }
+
+    const shareRecording = async () => {
+      const userId = await getUserKey();
+      API.uploadAudio(recordFileId, (fileId) => API.createRecord({ usersid: userId, "filesid": fileId, title: title }, () => console.log("Record created")));
     }
 
     return (
@@ -296,7 +308,7 @@ export default Record = () => {
                           fontSize: 22,
                           fontFamily: 'NunitoSans_bold',
                         }}
-                        onPress={() => console.log('Share')}
+                        onPress={() => shareRecording()}
                     >
                         Share
                     </Button>
