@@ -394,6 +394,24 @@ export default class API extends Component {
 
   /**
    * Get random record
+   * 
+Return example:
+{
+    "record": {
+        "recordid": "19cc100a-b2cc-46d5-a77d-2853980d23ee",
+        "usersid": "2f386f7c-45ab-4abb-a350-360574a46fde",
+        "filesid": "5f59bbe7-8483-43ce-b169-cf0f651696c5",
+        "likecount": 0,
+        "title": "Oikeaa ääntä"
+    },
+    "user": {
+        "usersid": "2f386f7c-45ab-4abb-a350-360574a46fde",
+        "username": "Seppo",
+        "location": "Jauza",
+        "description": "Life is supposed to be fun"
+    }
+}
+   * 
    * * */
   static getRandomRecord(cb) {
     fetch(API_ENDPOINTS + '/random/record', {
