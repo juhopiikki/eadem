@@ -3,7 +3,7 @@ import {StyleSheet, ScrollView, View, Text, StatusBar} from 'react-native';
 import { stringLiteral } from '@babel/types';
 import { IconButton } from 'react-native-paper';
 import {connect} from 'react-redux'
-import { setCurrentAuthor, setCurrentTitle, setCurrentAbout } from "../store/actions";
+import { setCurrentAuthor, setCurrentTitle, setCurrentAbout, setCurrentTrackId } from "../store/actions";
 
 class RecordItem extends Component {
 
@@ -11,6 +11,8 @@ class RecordItem extends Component {
       const setCurrentAuthorToRedux = this.props.setCurrentAuthor;
       const setCurrentTitleToRedux = this.props.setCurrentTitle;
       const setCurrentAboutToRedux = this.props.setCurrentAbout;
+      const setCurrentTrackIdToRedux = this.props.setCurrentTrackId;
+      console.log("RECORD ID: ", this.props.recordid)
 
       return (
         <View style={{
@@ -50,6 +52,7 @@ class RecordItem extends Component {
               onPress={() => { setCurrentAuthorToRedux(this.props.recordAuthor);
                 setCurrentTitleToRedux(this.props.recordName);  
                 setCurrentAboutToRedux(this.props.about);
+                setCurrentTrackIdToRedux(this.props.recordid);
               }}
             />
             <IconButton
@@ -72,4 +75,4 @@ class RecordItem extends Component {
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, { setCurrentAuthor, setCurrentTitle, setCurrentAbout })(RecordItem);
+export default connect(mapStateToProps, { setCurrentAuthor, setCurrentTitle, setCurrentAbout, setCurrentTrackId })(RecordItem);

@@ -1,6 +1,11 @@
 import API from '../utils/api'
 import { getUserKey } from '../index'
 
+export const setCurrentTrackId = (trackId) => (dispatch) => {
+    console.log("TARCK: ", trackId)
+    dispatch({type: 'SET_CURRENT_TRACK_ID', payload: trackId});
+};
+
 export const clearTrackDetails = () => (dispatch) => {
     dispatch({type: 'RESET_TRACK_DETAILS'});
 };
