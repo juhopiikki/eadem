@@ -82,7 +82,7 @@ export default class AudioPlayer {
      */
     static getProgress() {
         if (player === undefined || player.currentTime < 0 || player.duration <= 0)
-            return 0;
+            return -1;
         return player.currentTime / player.duration;
     }
 
@@ -128,14 +128,14 @@ export default class AudioPlayer {
      * @param {function} callBack when the player is stopped
     */
     static stop(callBack) {
-        if (player !== undefined && player)
+        if (player !== undefined && player.canStop)
             player.stop(callBack);
     }
 
     static createPlayer(file, callBack) {
         AudioPlayer.stop();
         player = new Player(file, {
-            continuesToPlayInBackground: true,
+            continuesToPlayInBackground: false,
             wakeLock: true,
         }).play();
     }

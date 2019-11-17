@@ -41,7 +41,7 @@ function createScreenTree() {
                             }],
                             options: {
                                 bottomTab: {
-                                    icon: require('./assets/test.png'),
+                                    icon: require('./assets/images/loop.png'),
                                     text: 'Loop',
                                     testID: 'FIRST_TAB_BAR_BUTTON',
                                     iconColor: colors.inactiveTab,
@@ -69,8 +69,8 @@ function createScreenTree() {
                                 }],
                                 options: {
                                     bottomTab: {
-                                        icon: require('./assets/test.png'),
-                                        text: 'Record',
+                                        icon: require('./assets/images/share.png'),
+                                        text: 'Share',
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
                                         selectedIconColor: colors.activeTab,
@@ -100,7 +100,7 @@ function createScreenTree() {
                                 }],
                                 options: {
                                     bottomTab: {
-                                        icon: require('./assets/test.png'),
+                                        icon: require('./assets/images/saved.png'),
                                         text: 'Saved',
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,
@@ -131,7 +131,7 @@ function createScreenTree() {
                                 }],
                                 options: {
                                     bottomTab: {
-                                        icon: require('./assets/test.png'),
+                                        icon: require('./assets/images/me.png'),
                                         text: 'Me',
                                         testID: 'FIRST_TAB_BAR_BUTTON',
                                         iconColor: colors.inactiveTab,

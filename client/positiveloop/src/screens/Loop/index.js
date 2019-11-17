@@ -78,12 +78,18 @@ class Loop extends Component {
     startPlayer(file) {
         console.log("starting playback with file: " + file);
         AudioPlayer.playUrl(file);
-        this.play();
+        if (this.interval !== undefined)
+            clearInterval(this.interval)
+        this.interval = setInterval(() => this.getProgress(), 100);
+
+        this.setState({
+            playing: true
+        })
     }
 
     getProgress() {
         let progress = AudioPlayer.getProgress();
-        if (progress == 0 && this.interval !== undefined) {
+        if (progress == -1 && this.interval !== undefined) {
             this.finished();
         }
         
@@ -95,7 +101,6 @@ class Loop extends Component {
     finished = () => {
         if (this.interval !== undefined)
             clearInterval(this.interval)
-        AudioPlayer.stop();
         this.getRandomTrack();
     }
 

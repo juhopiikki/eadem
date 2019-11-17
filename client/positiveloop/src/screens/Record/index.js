@@ -68,10 +68,12 @@ export default Record = () => {
 
     return (
         <>
+        {/* <View style={styles.main}> */}
+            <KeyboardAwareScrollView contentContainerStyle={styles.main} keyboardShouldPersistTaps='handled'>
             <View style={{
               flex: 1,
               flexDirection: 'column',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               alignItems: 'center',
             }}>
 
@@ -300,11 +302,17 @@ export default Record = () => {
                     </Button>
                 </View>
             </View>
+            </KeyboardAwareScrollView>
+        {/* </View> */}
         </>
     );
 };
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    backgroundColor: colors.background,
+},
   tinyLabel: {
       fontFamily: 'NunitoSans',
       fontSize: 12,
