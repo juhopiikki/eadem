@@ -7,7 +7,7 @@ import {
     Image
 } from 'react-native';
 import { ProgressBar, IconButton, TouchableRipple } from 'react-native-paper';
-import { getSavedRecords } from "../../store/actions";
+import { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor } from "../../store/actions";
 import API from '../../utils/api'
 import AudioPlayer from '../../utils/AudioPlayer';
 
@@ -60,7 +60,19 @@ class Loop extends Component {
     }
 
     getRandomTrack = () => {
-        API.getRandomRecord((res) => this.startPlayer(res.record.filesid));
+        const { 
+            setCurrentTitle: setTitle, 
+            setCurrentAbout: setAbout, 
+            setCurrentTrackId: setTrackId, 
+            setCurrentAuthor: setAuthor
+         } = this.props;
+        API.getRandomRecord((res) => {
+            this.startPlayer(res.record.filesid);
+            setTitle(res.record.title);
+            setAbout(res.user.description);
+            setTrackId(res.record.recordid);
+            setAuthor(res.user.username);
+        });
     }
 
     startPlayer(file) {
@@ -386,7 +398,7 @@ const mapStateToProps = state => ({
     title: state.currentTitle,
 });
 
-export default connect(mapStateToProps, { getSavedRecords })(Loop);
+export default connect(mapStateToProps, { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor })(Loop);
 
 const styles = StyleSheet.create({
     titleText: {
