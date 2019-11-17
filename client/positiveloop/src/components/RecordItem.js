@@ -41,6 +41,10 @@ class RecordItem extends Component {
                 fontFamily: 'NunitoSans', 
                 fontSize: 18
               }}>{this.props.recordAuthor}</Text>
+              { this.props.liked > 0 && <Text style={{
+                fontFamily: 'NunitoSans',
+                fontSize: 15
+              }}>{this.props.liked} likes</Text>}
             </View>
             <IconButton
               style={{

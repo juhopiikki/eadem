@@ -107,6 +107,7 @@ class Loop extends Component {
     }
 
     finished = () => {
+        this.state.liked = false;
         this.clearClearInterval(false);
         this.getRandomTrack();
     }
