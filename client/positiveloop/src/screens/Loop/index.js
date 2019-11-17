@@ -67,11 +67,11 @@ class Loop extends Component {
             setCurrentAuthor: setAuthor
          } = this.props;
         API.getRandomRecord((res) => {
-            this.startPlayer(res.record.filesid);
             setTitle(res.record.title);
             setAbout(res.user.description);
             setTrackId(res.record.recordid);
             setAuthor(res.user.username);
+            this.startPlayer(res.record.filesid);
         });
     }
 
