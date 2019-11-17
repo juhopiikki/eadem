@@ -59,6 +59,10 @@ class Loop extends Component {
         }
     }
 
+    getRandomTrack = () => {
+        API.getRandomRecord((res) => this.startPlayer(res.record.filesid));
+    }
+
     startPlayer(file) {
         console.log("starting playback with file: " + file);
         AudioPlayer.playUrl(file);
