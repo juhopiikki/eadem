@@ -44,14 +44,14 @@ export default class AudioRecorder {
     static async record(callBack) {
 
         // Check permission before trying to record
-        const permission = await AudioPlayer.checkPermissions();
+        const permission = await AudioRecorder.checkPermissions();
         if (!permission)
             return;
 
         AudioRecorder.stop();
 
         // Create recorder and start recording
-        recorder = new Recorder(AudioPlayer.getName(), {
+        recorder = new Recorder(AudioRecorder.getName(), {
             bitrate: 128000,
             channels: 2,
             sampleRate: 44100,

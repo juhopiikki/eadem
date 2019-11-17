@@ -1,46 +1,60 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Platform, SafeAreaView, StatusBar, StyleSheet, View, TextInput, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
 import {connect} from 'react-redux'
+import {Navigation} from "react-native-navigation";
+import {refreshRecords} from "../../index";
 
 
-const Saved = (props) => {
-    console.log(props.savedRecords)
-    console.log(props.savedRecords.length)
+class Saved extends Component {
 
-    return (
-        <View style={styles.main}>
-            <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
-                <View style={styles.body}>
-                    <View style={styles.titleRow}>
-                        <Text style={styles.title}>
-                            Saved Recordings
-                        </Text>
+    constructor(props) {
+        super(props);
+        Navigation.events().bindComponent(this);
+    }
+
+    async componentDidAppear() {
+        await refreshRecords();
+        console.log('SAVED APPEAR')
+    }
+
+    render() {
+        return (
+            <View style={styles.main}>
+                <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
+                    <View style={styles.body}>
+                        <View style={styles.titleRow}>
+                            <Text style={styles.title}>
+                                Saved Recordings
+                            </Text>
+                        </View>
+                        {
+                            this.props.savedRecords.map((recordItem) => (
+                                <RecordItem
+                                    key={recordItem.record.recordid}
+                                    recordName={recordItem.record.title}
+                                    recordAuthor={recordItem.user.username}
+                                    about={recordItem.user.description}
+                                    recordid={recordItem.record.recordid}
+                                />
+                            ))
+                        }
                     </View>
-                    {
-                        props.savedRecords.map((recordItem) => (
-                            <RecordItem 
-                                key={recordItem.record.recordid} 
-                                recordName={recordItem.record.title} 
-                                recordAuthor={recordItem.user.username} 
-                                about={recordItem.user.description}
-                                recordid={recordItem.record.recordid}
-                        />
-                        ))
-                    }
-                </View>
-            </KeyboardAwareScrollView>
-        </View>
-    );
-};
+                </KeyboardAwareScrollView>
+            </View>
+        );
+    };
+}
+
+
 
 const mapStateToProps = state => ({
     savedRecords: state.savedRecords
 });
-  
+
 export default connect(mapStateToProps, {})(Saved);
 
 const styles = StyleSheet.create({
