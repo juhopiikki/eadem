@@ -181,8 +181,8 @@ export const getUserKey = async () => {
 export async function initializeApp () {
     registerScreens();
     createScreenTree();
-    // const user = await getUserKey();
-    const user = "d97b8baa-b626-4615-b142-fa6687887bfa"
+    const user = await getUserKey();
+    // const user = "d97b8baa-b626-4615-b162-fa6687887bfa"
     API.getUserById(
         user,
         (res) => {

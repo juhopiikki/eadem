@@ -4,11 +4,15 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
+import {connect} from 'react-redux'
 
 
-const Saved = () => {
+const Saved = (props) => {
+    console.log(props.savedRecords)
+    console.log(props.savedRecords.length)
+
     return (
-        <>
+        <View style={styles.main}>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
                 <View style={styles.body}>
                     <View style={styles.titleRow}>
@@ -16,26 +20,37 @@ const Saved = () => {
                             Saved Recordings
                         </Text>
                     </View>
-                    <RecordItem recordName="I love life" recordAuthor="Seppo" />
-                    <RecordItem recordName="Made my day" recordAuthor="Arttu" />
-                    <RecordItem recordName="Beer is good" recordAuthor="Maija" />
-                    <RecordItem recordName="Elämä on parasta huumetta" recordAuthor="Sirpa" />
-                    <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
+                    {
+                        props.savedRecords.map((recordItem) => (
+                            <RecordItem key={recordItem.record.recordid} recordName={recordItem.record.title} recordAuthor={recordItem.user.username} />
+                        ))
+                    }
                 </View>
             </KeyboardAwareScrollView>
-        </>
+        </View>
     );
 };
 
+const mapStateToProps = state => ({
+    savedRecords: state.savedRecords
+});
+  
+export default connect(mapStateToProps, {})(Saved);
+
 const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
     row: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: "flex-start", 
+        alignItems: "flex-start",
         marginBottom: 40,
     },
     body: {
-        padding: 40,
+        paddingHorizontal: 20,
+        paddingVertical: 20,
         flex: 1,
         flexDirection: 'column',
         backgroundColor: Colors.white,
@@ -45,7 +60,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         height: 40,
         width: '100%',
-        borderBottomColor: '#000000', 
+        borderBottomColor: '#000000',
         borderBottomWidth: 1,
         backgroundColor: colors.backgroundColor,
         paddingLeft: 0,
@@ -61,7 +76,7 @@ const styles = StyleSheet.create({
     titleRow: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: "center", 
+        alignItems: "center",
         marginBottom: 20,
     },
     title: {
@@ -69,5 +84,3 @@ const styles = StyleSheet.create({
         fontSize: 28
     }
 });
-
-export default Saved;

@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {connect} from 'react-redux'
 import { Platform, SafeAreaView, StatusBar, StyleSheet, View, TextInput, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
+import { setUserName, setUserDescription } from '../../store/actions'
 
+const Me = (props) => {
+    const [userName, onChangeUserName] = React.useState(props.userName);
+    const [description, onChangeDesc] = React.useState(props.userdescription);
+    const setUserNameToRedux = props.setUserName
+    const setUserDescriptionToRedux = props.setUserDescription
 
-const Me = () => {
     return (
-        <>
+        <View style={styles.main}>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
                 <View style={styles.info}>
                     <View style={styles.titleRow}>
@@ -20,13 +26,21 @@ const Me = () => {
                         <Text style={styles.inputTitle}>
                             Name
                         </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
+                        <TextInput underlineColorAndroid="transparent" style={styles.input}
+                          onChangeText={text => onChangeUserName(text)}
+                          value={userName}
+                          onBlur={() => setUserNameToRedux(userName) }
+                        />
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.inputTitle}>
                             Little something about me
                         </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}></TextInput>
+                        <TextInput underlineColorAndroid="transparent" style={styles.input} 
+                          onChangeText={text => onChangeDesc(text)}
+                          value={description}
+                          onBlur={() => setUserDescriptionToRedux(description) }
+                        />
                     </View>
                 </View>
                 <View style={styles.recordings}>
@@ -39,11 +53,22 @@ const Me = () => {
                     <RecordItem recordName="Best day of my life" recordAuthor="Anonymous" />
                 </View>
             </KeyboardAwareScrollView>
-        </>
+        </View>
     );
 };
 
+const mapStateToProps = state => ({
+  userName: state.userName,
+  userdescription: state.userdescription,
+});
+
+export default connect(mapStateToProps, { setUserName, setUserDescription })(Me);
+
 const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: colors.background
+    },
     row: {
         flex: 1,
         flexDirection: 'column',
@@ -94,5 +119,3 @@ const styles = StyleSheet.create({
         fontSize: 28
     }
 });
-
-export default Me;

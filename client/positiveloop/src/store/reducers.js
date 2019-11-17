@@ -5,7 +5,12 @@ const initialState = {
     currentAbout: null,
     savedRecords: [],
     myRecords: [],
-};
+    savedAudioIds: [],
+    favoriteAudioIds: [],
+    userName: 'Seppo',
+    userId: '',
+    userdescription: 'Life is supposed to be fun',
+}
 
 function appReducer(state = initialState, action) {
     switch (action.type) {
@@ -38,6 +43,16 @@ function appReducer(state = initialState, action) {
             return {
                 ...state,
                 myRecords: action.payload,
+            };
+        case 'SET_USERNAME':
+            return {
+                ...state,
+                userName: action.payload,
+            };
+        case 'SET_USER_DESCRIPTION':
+            return {
+                ...state,
+                userdescription: action.payload,
             };
         case 'RESET_TRACK_DETAILS':
             return {

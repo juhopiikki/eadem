@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import {
     StyleSheet,
     ScrollView,
@@ -7,9 +7,10 @@ import {
     Text,
     StatusBar,
     Dimensions,
+    Image
 } from 'react-native';
-import { ProgressBar, IconButton } from 'react-native-paper';
-import {getSavedRecords} from "../../store/actions";
+import { ProgressBar, IconButton, TouchableRipple } from 'react-native-paper';
+import { getSavedRecords } from "../../store/actions";
 import API from '../../utils/api'
 
 
@@ -20,7 +21,7 @@ class Loop extends Component {
     };
 
     likeCurrentTrack() {
-        const {trackId} = this.props;
+        const { trackId } = this.props;
         // const trackId = 'b55e5dfb-f4ab-4720-beb0-eece7d8421b2';
         if (trackId) {
             API.likeRecord(trackId,
@@ -34,76 +35,275 @@ class Loop extends Component {
         }
     }
 
+    play = () => {
+        this.setState({
+            playing: true
+        })
+    }
+
+    pause = () => {
+        this.setState({
+            playing: false
+        })
+    }
+
     render() {
-        const {trackId, author, title, about, getSavedRecords: getSaved} = this.props;
-        const {playing, liked} = this.state;
+        const { trackId, author, title, about, getSavedRecords: getSaved } = this.props;
+        const { playing, liked } = this.state;
         return (
-            <View style={styles.pageContainer}>
-                <View style={styles.infoContainer}>
-                <Text style={styles.titleText}>
-                    {title || '--'}
-                </Text>
-                <Text style={styles.sharedText}>
-                    {trackId ? 'Shared by' : null}
-                </Text>
-                <Text style={styles.authorText}>
-                    {author || '--'}
-                </Text>
-                <Text>
-                    {about || '--'}
-                </Text>
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingBottom: 5,
+                paddingTop: 0
+            }}>
+
+                <View style={{
+                    height: 60,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginBottom: 10
+                }}>
+                    <Image
+                        style={{
+                            height: 14,
+                            width: '100%',
+                            resizeMode: 'contain'
+                        }}
+                        source={require('../../assets/images/logo.png')}
+                    />
                 </View>
-                <View style={styles.trackContainer}>
+
+                <View style={{
+                    flex: 6,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    // backgroundColor: 'skyblue',
+                    marginHorizontal: 20
+                }}>
+                    <Text style={{
+                        fontFamily: 'NunitoSans_bold',
+                        padding: 0,
+                        fontSize: 34,
+                    }}>
+                        {title || ''}
+                    </Text>
+                    {author &&
+                        <>
+                            <Text style={{
+                                fontFamily: 'NunitoSans',
+                                padding: 5,
+                                fontSize: 14,
+                            }}>
+                                {author ? 'Shared by' : ''}
+                            </Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans_bold',
+                                padding: 0,
+                                fontSize: 20,
+                            }}>
+                                {author || ''}
+                            </Text>
+                        </>}
+                    {(author && about) &&
+                        <Text style={{
+                            fontFamily: 'NunitoSans_italic',
+                            padding: 5,
+                            fontSize: 16,
+                            textAlign: 'center',
+                            marginHorizontal: 30
+                        }}>
+                            {about || ''}
+                        </Text>}
+                </View>
+
+
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
                     <ProgressBar
                         visible={true}
                         progress={0.5}
-                        color={'black'}
-                        style={{height: 10, width: 300}}
+                        color={'#F83E81'}
+                        style={{ height: 8, width: 300 }}
                     />
                 </View>
-                <View style={styles.skipButtonContainer}>
-                    <IconButton
-                        icon="rewind-10"
-                        color={'black'}
-                        size={40}
-                        onPress={() => console.log('Pressed')}
-                    />
-                    <IconButton
-                        icon="play"
-                        color={'black'}
-                        size={40}
-                        onPress={() => console.log('Pressed')}
-                    />
-                    <IconButton
-                        icon="fast-forward-10"
-                        color={'black'}
-                        size={40}
-                        onPress={() => console.log('Pressed')}
-                    />
-                </View>
-                <View style={styles.playContainer}>
-                    <IconButton
-                        icon={liked ? "heart" : "heart-outline"}
-                        color={'black'}
-                        size={36}
-                        onPress={() => {if (!liked){
-                            this.likeCurrentTrack()
-                        } }}
-                    />
 
-                    <IconButton
-                        icon="skip-next"
-                        color={'black'}
-                        size={36}
-                        onPress={() => console.log('Pressed')}
-                    />
-                    <IconButton
-                        icon="content-save"
-                        color={'black'}
-                        size={36}
-                        onPress={() => getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
-                    />
+                {/* Control wrapper */}
+                <View style={{
+                    // backgroundColor: 'skyblue',
+                    flex: 8,
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    paddingHorizontal: 30,
+                    marginBottom: 20
+                }}>
+
+
+                    {/* Forward backward buttons */}
+                    <View style={{
+                        // backgroundColor: 'skyblue',
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingHorizontal: 30,
+                        marginBottom: 20
+                    }}>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/backward.png')}
+                                color={'black'}
+                                size={40}
+                                onPress={() => console.log('Pressed')}
+                            />
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/forward.png')}
+                                color={'black'}
+                                size={40}
+                                onPress={() => console.log('Pressed')}
+                            />
+                        </View>
+                    </View>
+
+
+
+
+
+                    {/* Save play next buttons */}
+                    <View style={{
+                        // backgroundColor: 'skyblue',
+                        flex: 1,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                        marginBottom: 25
+                    }}>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/save.png')}
+                                color={'black'}
+                                size={36}
+                                onPress={() => getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
+                            />
+                            <Text style={[styles.tinyLabel, {
+                                bottom: -5
+                            }]}>
+                                Save
+                            </Text>
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            {playing ?
+                                <TouchableRipple
+                                    borderless={true}
+                                    onPress={() => this.pause()}
+                                >
+                                    <Image style={{ width: 75, height: 75 }} source={require('../../assets/images/pause.png')}></Image>
+                                </TouchableRipple>
+                                :
+                                <TouchableRipple
+                                    borderless={true}
+                                    onPress={() => this.play()}
+                                >
+                                    <Image style={{ width: 75, height: 75 }} source={require('../../assets/images/play.png')}></Image>
+                                </TouchableRipple>
+                            }
+
+                            <Text style={styles.tinyLabel}>
+                                {playing ? 'Pause' : 'Play'}
+                            </Text>
+                        </View>
+                        <View style={{
+                            // backgroundColor: 'pink',
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <IconButton
+                                icon={require('../../assets/images/next.png')}
+                                color={'black'}
+                                size={36}
+                                onPress={() => console.log('Pressed')}
+                            />
+                            <Text style={[styles.tinyLabel, {
+                                bottom: -5
+                            }]}>
+                                Next
+                            </Text>
+                        </View>
+                    </View>
+
+
+
+
+                    {/* Like button */}
+                    <View style={{
+                        // backgroundColor: 'skyblue',
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                        marginBottom: 20
+                    }}>
+                        {liked ?
+                            <IconButton
+                                icon={require('../../assets/images/liked.png')}
+                                color={'#F83E81'}
+                                size={36}
+                            />
+                            :
+                            <IconButton
+                                icon={require('../../assets/images/like.png')}
+                                color={'black'}
+                                size={36}
+                                onPress={() => this.likeCurrentTrack()}
+                            />}
+                        <Text style={[styles.tinyLabel, {
+                            bottom: -5
+                        }]}>
+                            {liked ? 'Liked!' : 'Like'}
+                        </Text>
+                    </View>
+
                 </View>
+
             </View>
         );
     }
@@ -116,7 +316,7 @@ const mapStateToProps = state => ({
     title: state.currentTitle,
 });
 
-export default connect(mapStateToProps, {getSavedRecords})(Loop);
+export default connect(mapStateToProps, { getSavedRecords })(Loop);
 
 const styles = StyleSheet.create({
     titleText: {
@@ -140,8 +340,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingHorizontal: 15,
         paddingVertical: 20,
-        justifyContent: "space-between",
-        alignItems: "center",
+        // justifyContent: "space-between",
+        // alignItems: "center",
     },
     infoContainer: {
         flex: 3,
@@ -178,5 +378,14 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "stretch",
         paddingVertical: 0,
+    },
+
+
+
+    tinyLabel: {
+        fontFamily: 'NunitoSans',
+        fontSize: 12,
+        position: 'absolute',
+        bottom: -20
     }
 });
