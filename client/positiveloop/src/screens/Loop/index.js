@@ -15,7 +15,7 @@ class Loop extends Component {
     state = {
         playing: false,
         liked: false,
-        progress: 0
+        progress: -1
     };
 
     componentWillUnmount() {
@@ -78,9 +78,11 @@ class Loop extends Component {
     startPlayer(file) {
         console.log("starting playback with file: " + file);
         AudioPlayer.playUrl(file);
-        if (this.interval !== undefined)
-            clearInterval(this.interval)
-        this.interval = setInterval(() => this.getProgress(), 100);
+        setTimeout(() => {
+          if (this.interval !== undefined)
+              clearInterval(this.interval)
+          this.interval = setInterval(() => this.getProgress(), 100);
+        }, 0);
 
         this.setState({
             playing: true
