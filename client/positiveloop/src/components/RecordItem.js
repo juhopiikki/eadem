@@ -2,9 +2,16 @@ import React, {Component} from 'react';
 import {StyleSheet, ScrollView, View, Text, StatusBar} from 'react-native';
 import { stringLiteral } from '@babel/types';
 import { IconButton } from 'react-native-paper';
+import {connect} from 'react-redux'
+import { setCurrentAuthor, setCurrentTitle, setCurrentAbout } from "../store/actions";
 
 class RecordItem extends Component {
-    render() {
+
+  render() {
+      const setCurrentAuthorToRedux = this.props.setCurrentAuthor;
+      const setCurrentTitleToRedux = this.props.setCurrentTitle;
+      const setCurrentAboutToRedux = this.props.setCurrentAbout;
+
       return (
         <View style={{
           borderRadius: 5,
@@ -40,7 +47,10 @@ class RecordItem extends Component {
               icon="play"
               color={'black'}
               size={30}
-              onPress={() => console.log('Pressed')}
+              onPress={() => { setCurrentAuthorToRedux(this.props.recordAuthor);
+                setCurrentTitleToRedux(this.props.recordName);  
+                setCurrentAboutToRedux(this.props.about);
+              }}
             />
             <IconButton
               style={{
@@ -49,7 +59,7 @@ class RecordItem extends Component {
               icon="delete"
               color={'black'}
               size={30}
-              onPress={() => console.log('Pressed')}
+              onPress={() => console.log('Deleted')}
             />
           </View>
 
@@ -58,5 +68,8 @@ class RecordItem extends Component {
       );
     }
   }
-  
-export default RecordItem;
+
+const mapStateToProps = state => ({
+});
+
+export default connect(mapStateToProps, { setCurrentAuthor, setCurrentTitle, setCurrentAbout })(RecordItem);
