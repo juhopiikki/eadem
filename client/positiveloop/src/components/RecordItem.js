@@ -46,8 +46,8 @@ class RecordItem extends Component {
               style={{
                 flex: 1
               }}
-              icon="play"
-              color={'black'}
+              icon={require('../assets/images/play.png')}
+              color={'#F83E81'}
               size={30}
               onPress={() => { setCurrentAuthorToRedux(this.props.recordAuthor);
                 setCurrentTitleToRedux(this.props.recordName);  
