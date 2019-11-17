@@ -349,15 +349,13 @@ export default class API extends Component {
   /**
    * Upload audio recording
    * * */
-  static uploadudio(uri, fileName, cb) {
+  static uploadAudio(uri, cb) {
     var file = {
       name: 'audiofile',
       filename: 'audiofile',
       data: RNFetchBlob.wrap(uri)
     };
-
-    // let formdata = new FormData();
-    // formdata.append("audiofile", file);
+    
     RNFetchBlob.fetch('POST', API_ENDPOINTS + '/file/upload', {
       'Content-Type': "multipart/form-data",
     }, [
@@ -365,7 +363,7 @@ export default class API extends Component {
     ])
       .then((response) => cb(response.data))
       .catch((err) => {
-        console.log('Error in adding a comment' + err);
+        console.log('Error in uploading audio' + err);
       })
   }
 }
