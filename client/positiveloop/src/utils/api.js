@@ -391,5 +391,14 @@ export default class API extends Component {
         console.log('Error in uploading audio' + err);
       })
   }
-}
 
+  /**
+   * Get random record
+   * * */
+  static getRandomRecord(cb) {
+    fetch(API_ENDPOINTS + '/random/record', {
+      method: 'GET'
+    }).then(response => response.json())
+      .then(cb).catch(() => console.log('API ERROR'));
+  }
+}

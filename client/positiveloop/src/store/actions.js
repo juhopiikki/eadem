@@ -28,6 +28,16 @@ export const getSavedRecords = (userId) => (dispatch) => {
     );
 };
 
+/*export const getRandomRecord = () => (dispatch) => {
+    API.getSavedRecords(
+        (res) => {
+            console.log('API response for saved records', res);
+            if (Array.isArray(res) && res.length > 0) dispatch({type: '***********', payload: res});
+            else dispatch({type: '************', payload: []});
+        }
+    );
+};*/
+
 export const getMyRecords = (userId) => (dispatch) => {
     API.getUserRecords(
         userId,
