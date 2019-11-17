@@ -10,7 +10,7 @@ export default class AudioPlayer {
      * @param {function} callBack when the player is started
      */
     static playFile(fileName, callBack) {
-        AudioPlayer.startPlayer(fileName, callBack);
+        AudioPlayer.createPlayer(fileName, callBack);
     }
 
     /**
@@ -19,7 +19,61 @@ export default class AudioPlayer {
      * @param {function} callBack when the player is started
      */
     static playUrl(trackId, callBack) {
-        AudioPlayer.startPlayer("http://54.229.97.181:8080/mental/file/" + trackId, callBack);
+        AudioPlayer.createPlayer("http://54.229.97.181:8080/mental/file/" + trackId, callBack);
+    }
+
+    /**
+     * Check if a track is currently playing
+     * @param {function} callBack containing if the audio was paused or started
+     */
+    static playPause(callBack) {
+        if (player !== undefined) {
+            player.playPause(callBack);
+        }
+    }
+
+    /**
+     * Play / start current track
+     * @param {function} callBack containing if the audio was started
+     */
+    static play(callBack) {
+        if (player !== undefined && player.isPlaying && player.canPlay) {
+            player.play(callBack);
+        }
+    }
+
+    /**
+     * Check if a track is currently playing
+     * @param {function} callBack containing if the audio was paused
+     */
+    static pause(callBack) {
+        if (player !== undefined && player.isPaused) {
+            player.pause(callBack);
+        }
+    }
+
+    /**
+     * Check if a track is currently playing
+     * @return {boolean} is a track currently playing
+     */
+    static isPlaying() {
+        return player !== undefined ? player.isPlaying : false;
+    }
+
+    /**
+     * Check if a track is currently paused
+     * @return {boolean} is a track currently paused
+     */
+    static isPaused() {
+        return player !== undefined ? player.isPaused : false;
+    }
+
+    /**
+     * Check if a track is currently stopped
+     * @return {boolean} is a track currently stopped
+     */
+    static isStopped() {
+        return player !== undefined ? player.isStopped : true;
     }
 
     /**
@@ -27,7 +81,7 @@ export default class AudioPlayer {
      * @returns {number} the current progress between [0, 1]
      */
     static getProgress() {
-        if (player.duration <= 0)
+        if (player.currentTime < 0 || player.duration <= 0)
             return 0;
         return player.currentTime / player.duration;
     }
@@ -78,12 +132,11 @@ export default class AudioPlayer {
             player.stop(callBack);
     }
 
-    static startPlayer(file, callBack) {
+    static createPlayer(file, callBack) {
         AudioPlayer.stop();
         player = new Player(file, {
             continuesToPlayInBackground: true,
             wakeLock: true,
-
-        }).play(callBack);
+        }).play();
     }
 }

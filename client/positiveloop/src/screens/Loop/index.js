@@ -1,24 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux'
 import {
     StyleSheet,
-    ScrollView,
     View,
     Text,
-    StatusBar,
-    Dimensions,
     Image
 } from 'react-native';
 import { ProgressBar, IconButton, TouchableRipple } from 'react-native-paper';
 import { getSavedRecords } from "../../store/actions";
 import API from '../../utils/api'
-
+import AudioPlayer from '../../utils/AudioPlayer';
 
 class Loop extends Component {
     state = {
         playing: false,
         liked: false,
+        progress: 0
     };
+
+    componentWillUnmount() {
+        if (this.interval !== undefined)
+            clearInterval(this.interval)
+    }
+
+    useInterval(callback, delay) {
+        const savedCallback = useRef();
+
+        // Remember the latest callback.
+        useEffect(() => {
+            savedCallback.current = callback;
+        }, [callback]);
+
+        // Set up the interval.
+        useEffect(() => {
+            function tick() {
+                savedCallback.current();
+            }
+            if (delay !== null) {
+                let id = setInterval(tick, delay);
+                return () => clearInterval(id);
+            }
+        }, [delay]);
+    }
+
 
     likeCurrentTrack() {
         const { trackId } = this.props;
@@ -35,13 +59,52 @@ class Loop extends Component {
         }
     }
 
+    getRandomTrack = () => {
+        API.getRandomRecord((res) => this.startPlayer(res.record.filesid));
+    }
+
+    startPlayer(file) {
+        console.log("starting playback with file: " + file);
+        AudioPlayer.playUrl(file);
+        this.play();
+    }
+
+    getProgress() {
+        let progress = AudioPlayer.getProgress();
+        if (progress == 0 && this.interval !== undefined) {
+            this.stop();
+        }
+        
+        this.setState({
+            progress: progress
+        });
+    }
+
     play = () => {
+        AudioPlayer.play();
+
+        if (this.interval !== undefined)
+            clearInterval(this.interval)
+        this.interval = setInterval(() => this.getProgress(), 100);
+
         this.setState({
             playing: true
         })
     }
 
     pause = () => {
+        if (this.interval !== undefined)
+            clearInterval(this.interval)
+        AudioPlayer.pause();
+        this.setState({
+            playing: false
+        })
+    }
+
+    stop = () => {
+        if (this.interval !== undefined)
+            clearInterval(this.interval)
+        AudioPlayer.stop();
         this.setState({
             playing: false
         })
@@ -130,7 +193,7 @@ class Loop extends Component {
                 }}>
                     <ProgressBar
                         visible={true}
-                        progress={0.5}
+                        progress={this.state.progress}
                         color={'#F83E81'}
                         style={{ height: 8, width: 300 }}
                     />
@@ -259,7 +322,7 @@ class Loop extends Component {
                                 icon={require('../../assets/images/next.png')}
                                 color={'black'}
                                 size={36}
-                                onPress={() => console.log('Pressed')}
+                                onPress={() => this.getRandomTrack()}
                             />
                             <Text style={[styles.tinyLabel, {
                                 bottom: -5
