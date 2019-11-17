@@ -21,6 +21,9 @@ class Loop extends Component {
 
     clearClearInterval(andSet) {
       const self = this;
+      self.setState({
+          playing: andSet
+      })
       setTimeout(() => {
         if (self.interval) {
           clearInterval(self.interval);
@@ -67,12 +70,10 @@ class Loop extends Component {
     }
 
     startPlayer(file) {
-        console.log("starting playback with file: " + file);
-        AudioPlayer.playUrl(file);
+      console.log("starting playback with file: " + file);
+      AudioPlayer.playUrl(file, () => {
         this.clearClearInterval(true);
-        this.setState({
-            playing: true
-        })
+      });
     }
 
     saveRecord = async() => {
@@ -111,29 +112,19 @@ class Loop extends Component {
     }
 
     play = () => {
-        AudioPlayer.play();
-
+      AudioPlayer.play(() => {
         this.clearClearInterval(true);
-
-        this.setState({
-            playing: true
-        })
+      });
     }
 
     pause = () => {
         this.clearClearInterval(false);
         AudioPlayer.pause();
-        this.setState({
-            playing: false
-        })
     }
 
     stop = () => {
         this.clearClearInterval(false);
         AudioPlayer.stop();
-        this.setState({
-            playing: false
-        })
     }
 
     render() {

@@ -133,10 +133,17 @@ export default class AudioPlayer {
     }
 
     static createPlayer(file, callBack) {
-        AudioPlayer.stop();
+      var process = () => {
         player = new Player(file, {
             continuesToPlayInBackground: false,
             wakeLock: true,
-        }).play();
+        });
+        player.play(callBack);
+      };
+      if (player) {
+        player.destroy(process);
+      } else {
+        process();
+      }
     }
 }
