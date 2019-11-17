@@ -18,31 +18,21 @@ class Loop extends Component {
         progress: -1
     };
 
+    clearClearInterval(andSet) {
+      const self = this;
+      setTimeout(() => {
+        if (self.interval) {
+          clearInterval(self.interval);
+        }
+        if (andSet) {
+          self.interval = setInterval(() => self.getProgress(), 250);
+        }
+      }, 0);
+    }
+
     componentWillUnmount() {
-        if (this.interval !== undefined)
-            clearInterval(this.interval)
+      this.clearClearInterval(false)
     }
-
-    useInterval(callback, delay) {
-        const savedCallback = useRef();
-
-        // Remember the latest callback.
-        useEffect(() => {
-            savedCallback.current = callback;
-        }, [callback]);
-
-        // Set up the interval.
-        useEffect(() => {
-            function tick() {
-                savedCallback.current();
-            }
-            if (delay !== null) {
-                let id = setInterval(tick, delay);
-                return () => clearInterval(id);
-            }
-        }, [delay]);
-    }
-
 
     likeCurrentTrack() {
         const { trackId } = this.props;
@@ -78,12 +68,7 @@ class Loop extends Component {
     startPlayer(file) {
         console.log("starting playback with file: " + file);
         AudioPlayer.playUrl(file);
-        setTimeout(() => {
-          if (this.interval !== undefined)
-              clearInterval(this.interval)
-          this.interval = setInterval(() => this.getProgress(), 100);
-        }, 0);
-
+        this.clearClearInterval(true);
         this.setState({
             playing: true
         })
@@ -91,7 +76,10 @@ class Loop extends Component {
 
     getProgress() {
         let progress = AudioPlayer.getProgress();
-        if (progress == -1 && this.interval !== undefined) {
+        if (progress == -1 
+            && this.state.playing
+            && this.interval !== undefined
+        ) {
             this.finished();
         }
         
@@ -101,17 +89,14 @@ class Loop extends Component {
     }
 
     finished = () => {
-        if (this.interval !== undefined)
-            clearInterval(this.interval)
+        this.clearClearInterval(false);
         this.getRandomTrack();
     }
 
     play = () => {
         AudioPlayer.play();
 
-        if (this.interval !== undefined)
-            clearInterval(this.interval)
-        this.interval = setInterval(() => this.getProgress(), 100);
+        this.clearClearInterval(true);
 
         this.setState({
             playing: true
@@ -119,8 +104,7 @@ class Loop extends Component {
     }
 
     pause = () => {
-        if (this.interval !== undefined)
-            clearInterval(this.interval)
+        this.clearClearInterval(false);
         AudioPlayer.pause();
         this.setState({
             playing: false
@@ -128,8 +112,7 @@ class Loop extends Component {
     }
 
     stop = () => {
-        if (this.interval !== undefined)
-            clearInterval(this.interval)
+        this.clearClearInterval(false);
         AudioPlayer.stop();
         this.setState({
             playing: false
