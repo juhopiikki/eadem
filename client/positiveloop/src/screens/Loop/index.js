@@ -21,7 +21,8 @@ class Loop extends Component {
     state = {
         playing: false,
         liked: false,
-        progress: -1
+        progress: -1,
+        saved: false
     };
 
     clearClearInterval(andSet) {
@@ -82,6 +83,7 @@ class Loop extends Component {
     }
 
     saveRecord = async() => {
+        this.setState({ saved: true })
         const { 
             getMyRecords: getRecords
          } = this.props;
@@ -112,7 +114,10 @@ class Loop extends Component {
     }
 
     finished = () => {
-        this.state.liked = false;
+        this.setState({
+            liked: false,
+            saved: false
+        })
         this.clearClearInterval(false);
         this.getRandomTrack(true);
     }
@@ -135,7 +140,7 @@ class Loop extends Component {
 
     render() {
         const { trackId, author, title, about, getSavedRecords: getSaved } = this.props;
-        const { playing, liked } = this.state;
+        const { playing, liked, saved } = this.state;
         return (
             <View style={{
                 flex: 1,
@@ -176,6 +181,7 @@ class Loop extends Component {
                         fontFamily: 'NunitoSans_bold',
                         padding: 0,
                         fontSize: 34,
+                        textAlign: 'center'
                     }}>
                         {title || ''}
                     </Text>
@@ -185,6 +191,7 @@ class Loop extends Component {
                                 fontFamily: 'NunitoSans',
                                 padding: 5,
                                 fontSize: 14,
+                                textAlign: 'center'
                             }}>
                                 {author ? 'Shared by' : ''}
                             </Text>
@@ -192,6 +199,7 @@ class Loop extends Component {
                                 fontFamily: 'NunitoSans_bold',
                                 padding: 0,
                                 fontSize: 20,
+                                textAlign: 'center'
                             }}>
                                 {author || ''}
                             </Text>
@@ -295,16 +303,24 @@ class Loop extends Component {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
+                            {saved ?
+                            <IconButton
+                                icon={require('../../assets/images/saved.png')}
+                                color={'#F83E81'}
+                                size={36}
+                                onPress={() => {} } // getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
+                            />
+                            :
                             <IconButton
                                 icon={require('../../assets/images/save.png')}
                                 color={'black'}
                                 size={36}
                                 onPress={() => this.saveRecord() } // getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
-                            />
+                            />}
                             <Text style={[styles.tinyLabel, {
                                 bottom: -5
                             }]}>
-                                Save
+                                {saved ? 'Saved!' : 'Save'}
                             </Text>
                         </View>
                         <View style={{
@@ -399,7 +415,7 @@ const mapStateToProps = state => ({
     trackId: state.currentTrackId,
     author: state.currentAuthor,
     about: state.currentAbout,
-    title: state.currentTitle,
+    title: state.currentTitle
 });
 
 export default connect(mapStateToProps, { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor, getMyRecords })(Loop);
