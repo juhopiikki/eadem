@@ -1,66 +1,80 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import {connect} from 'react-redux'
 import { Platform, SafeAreaView, StatusBar, StyleSheet, View, TextInput, Text } from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
 import {setUserName, setUserDescription, sendUserNameToAPI, sendUserDescriptionToAPI} from '../../store/actions'
 import API from '../../utils/api'
+import {refreshRecords} from "../../index";
 
-const Me = (props) => {
-    return (
-        <View style={styles.main}>
-            <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
-                <View style={styles.info}>
-                    <View style={styles.titleRow}>
-                        <Text style={styles.title}>
-                            My Profile
-                        </Text>
+class Me extends Component {
+
+    constructor(props) {
+        super(props);
+        Navigation.events().bindComponent(this);
+    }
+
+    async componentDidAppear() {
+        await refreshRecords();
+        console.log('ME APPEAR')
+    }
+
+    render() {
+        return (
+            <View style={styles.main}>
+                <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
+                    <View style={styles.info}>
+                        <View style={styles.titleRow}>
+                            <Text style={styles.title}>
+                                My Profile
+                            </Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.inputTitle}>
+                                Name
+                            </Text>
+                            <TextInput underlineColorAndroid="transparent" style={styles.input}
+                                       onChangeText={text => this.props.setUserName(text)}
+                                       value={this.props.userName}
+                                       onBlur={() =>  sendUserNameToAPI(this.props.userName)
+                                       }
+                            />
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.inputTitle}>
+                                Little something about me
+                            </Text>
+                            <TextInput underlineColorAndroid="transparent" style={styles.input}
+                                       onChangeText={text => this.props.setUserDescription(text)}
+                                       value={this.props.userdescription}
+                                       onBlur={() => sendUserDescriptionToAPI(this.props.userdescription)}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.inputTitle}>
-                            Name
-                        </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}
-                          onChangeText={text => props.setUserName(text)}
-                          value={props.userName}
-                          onBlur={() =>  sendUserNameToAPI(props.userName)
-                          }
-                        />
+                    <View style={styles.recordings}>
+                        <View style={styles.titleRow}>
+                            <Text style={styles.title}>
+                                My Shared Recordings
+                            </Text>
+                        </View>
+                        {
+                            this.props.myRecords.map((recordItem) => (
+                                <RecordItem
+                                    key={recordItem.record.recordid}
+                                    recordName={recordItem.record.title}
+                                    recordAuthor={recordItem.user.username}
+                                    about={recordItem.user.description}
+                                    recordid={recordItem.record.recordid}
+                                />
+                            ))
+                        }
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.inputTitle}>
-                            Little something about me
-                        </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input}
-                          onChangeText={text => props.setUserDescription(text)}
-                          value={props.userdescription}
-                          onBlur={() => sendUserDescriptionToAPI(props.userdescription)}
-                        />
-                    </View>
-                </View>
-                <View style={styles.recordings}>
-                    <View style={styles.titleRow}>
-                        <Text style={styles.title}>
-                            My Shared Recordings
-                        </Text>
-                    </View>
-                    {
-                        props.myRecords.map((recordItem) => (
-                            <RecordItem 
-                                key={recordItem.record.recordid} 
-                                recordName={recordItem.record.title} 
-                                recordAuthor={recordItem.user.username} 
-                                about={recordItem.user.description}
-                                recordid={recordItem.record.recordid}
-                        />
-                        ))
-                    }
-                </View>
-            </KeyboardAwareScrollView>
-        </View>
-    );
+                </KeyboardAwareScrollView>
+            </View>
+        );
+    }
 };
 
 const mapStateToProps = state => ({
@@ -87,7 +101,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: Colors.white,
+        backgroundColor: 'white',
     },
     recordings: {
         paddingHorizontal: 20,
@@ -95,7 +109,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: Colors.white,
+        backgroundColor: 'white',
     },
     input: {
         fontFamily: 'NunitoSans',

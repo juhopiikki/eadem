@@ -178,6 +178,17 @@ export const getUserKey = async () => {
     }
 };
 
+export async function refreshRecords () {
+    try {
+        const user = await getUserKey();
+        store.dispatch(getSavedRecords(user));
+        store.dispatch(getMyRecords(user));
+        console.log('...Refreshing records')
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export async function initializeApp () {
     registerScreens();
     createScreenTree();
