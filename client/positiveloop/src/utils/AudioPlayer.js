@@ -135,7 +135,7 @@ export default class AudioPlayer {
     static createPlayer(file, callBack) {
         AudioPlayer.stop();
         player = new Player(file, {
-            continuesToPlayInBackground: true,
+            continuesToPlayInBackground: false,
             wakeLock: true,
         }).play();
     }
