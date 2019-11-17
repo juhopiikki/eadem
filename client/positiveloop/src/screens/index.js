@@ -4,7 +4,6 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import store from '../store/store'
 
-import Test from './Test';
 import Record from './Record';
 import Me from './Me';
 import Loop from './Loop';
