@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, Alert} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ProgressBar, Button, IconButton, TouchableRipple } from 'react-native-paper';
 import colors from "../../assets/colors";
@@ -75,7 +75,12 @@ export default Record = () => {
 
     const shareRecording = async () => {
       const userId = await getUserKey();
-      API.uploadAudio(recordFileId, (fileId) => API.createRecord({ usersid: userId, "filesid": fileId, title: title }, () => console.log("Record created")));
+      API.uploadAudio(recordFileId, (fileId) => API.createRecord({ usersid: userId, "filesid": fileId, title: title },
+      () => Alert.alert(
+        'Thank you!',
+        'Your message has been now shared!',
+        [{ text: 'OK', style: 'cancel' }]
+      )));
       setTitle('')
       restartRecording()
     }

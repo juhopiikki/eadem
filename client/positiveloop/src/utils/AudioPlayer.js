@@ -9,8 +9,8 @@ export default class AudioPlayer {
      * @param {string} fileName the audio file name on local storage
      * @param {function} callBack when the player is started
      */
-    static playFile(fileName, callBack) {
-        AudioPlayer.createPlayer(fileName, callBack);
+    static playFile(fileName, play, callBack) {
+        AudioPlayer.createPlayer(fileName, play, callBack);
     }
 
     /**
