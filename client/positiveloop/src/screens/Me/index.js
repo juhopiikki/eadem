@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     input: {
         fontFamily: 'NunitoSans',
         fontWeight: 'normal',
-        height: 40,
+        height: 50,
         width: '100%',
         borderBottomColor: '#000000',
         borderBottomWidth: 1,
