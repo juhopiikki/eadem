@@ -50,7 +50,7 @@ export default Record = () => {
       setIsRecording(true)
       // audioRecorder.record()
     }
-    
+
     const stopRecord = () => {
       setIsRecording(false)
       sethasRecorded(true)
@@ -72,15 +72,15 @@ export default Record = () => {
             <KeyboardAwareScrollView contentContainerStyle={styles.main} keyboardShouldPersistTaps='handled'>
             <View style={{
               flex: 1,
-              flexDirection: 'column', 
+              flexDirection: 'column',
               justifyContent: 'flex-start',
               alignItems: 'center',
             }}>
 
-                <View style={{ 
+                <View style={{
                   height: 80,
                   width: '100%',
-                  flexDirection: 'row', 
+                  flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
                   paddingHorizontal: 30,
@@ -102,29 +102,28 @@ export default Record = () => {
                   </>}
                 </View>
 
-                <View style={{ 
+                <View style={{
                   flex: 1,
-                  flexDirection: 'row', 
+                  flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginBottom: 10,
                   paddingHorizontal: 30,
                   // backgroundColor: 'skyblue'
                 }}>
-                    <TextInput 
-                      underlineColorAndroid="transparent" 
+                    <TextInput
+                      underlineColorAndroid="transparent"
                       style={{
                         backgroundColor: colors.background,
                         fontFamily: 'NunitoSans_bold',
                         width: '100%',
-                        borderBottomColor: '#000000', 
+                        borderBottomColor: '#000000',
                         borderBottomWidth: 1,
                         backgroundColor: colors.backgroundColor,
                         textAlign: 'center',
-                        fontSize: 30, 
+                        fontSize: 30,
                       }}
-                      maxLength={50}
-                      multiline
+                      maxLength={40}
                       placeholder="Title"
                       // placeholderTextColor="white"
                       onChangeText={text => {
@@ -145,7 +144,7 @@ export default Record = () => {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    
+
                     <View style={{
                         // backgroundColor: 'pink',
                         height: 40,
@@ -170,7 +169,7 @@ export default Record = () => {
                       }
                     </View>
 
-                    
+
                     {!hasRecorded ?
                     <View style={{
                         // backgroundColor: 'pink',
@@ -252,7 +251,7 @@ export default Record = () => {
                               {isRecording ? 'Play' : 'Play'}
                           </Text>
                         </View>
-                      
+
 
                       <View style={{
                             // backgroundColor: 'pink',
@@ -280,22 +279,22 @@ export default Record = () => {
 
 
 
-                <View style={{ 
-                  flex: 1, 
-                  justifyContent: 'flex-end' 
+                <View style={{
+                  flex: 1,
+                  justifyContent: 'flex-end'
                 }}>
                     <Button
                         mode="contained"
                         color={colors.buttonDefault}
                         uppercase={false}
-                        style={{ 
+                        style={{
                           marginBottom: 60,
-                          borderRadius: 6 
+                          borderRadius: 6
                         }}
                         contentStyle={{ paddingHorizontal: 36, paddingVertical: 8 }}
-                        labelStyle={{ 
+                        labelStyle={{
                           fontSize: 22,
-                          fontFamily: 'NunitoSans_bold', 
+                          fontFamily: 'NunitoSans_bold',
                         }}
                         onPress={() => console.log('Share')}
                     >
