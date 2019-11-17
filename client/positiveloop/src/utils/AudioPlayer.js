@@ -18,8 +18,8 @@ export default class AudioPlayer {
      * @param {string} trackId the audio file id on server
      * @param {function} callBack when the player is started
      */
-    static playUrl(trackId, callBack) {
-        AudioPlayer.createPlayer("http://54.229.97.181:8080/mental/file/" + trackId, callBack);
+    static playUrl(trackId, play, callBack) {
+        AudioPlayer.createPlayer("http://54.229.97.181:8080/mental/file/" + trackId, play, callBack);
     }
 
     /**
@@ -132,13 +132,15 @@ export default class AudioPlayer {
             player.stop(callBack);
     }
 
-    static createPlayer(file, callBack) {
+    static createPlayer(file, play, callBack) {
       var process = () => {
         player = new Player(file, {
             continuesToPlayInBackground: false,
-            wakeLock: false,
         });
-        player.play(callBack);
+        if (play)
+            player.play(callBack);
+        else
+            player.prepare(callBack);
       };
       if (player) {
         player.destroy(process);

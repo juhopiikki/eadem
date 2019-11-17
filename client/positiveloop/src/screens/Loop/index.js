@@ -13,6 +13,11 @@ import AudioPlayer from '../../utils/AudioPlayer';
 import { getUserKey } from '../../index'
 
 class Loop extends Component {
+
+    componentDidMount() {
+        this.getRandomTrack(false);
+    }
+
     state = {
         playing: false,
         liked: false,
@@ -53,7 +58,7 @@ class Loop extends Component {
         }
     }
 
-    getRandomTrack = () => {
+    getRandomTrack = (play) => {
         const { 
             setCurrentTitle: setTitle, 
             setCurrentAbout: setAbout, 
@@ -65,14 +70,14 @@ class Loop extends Component {
             setAbout(res.user.description);
             setTrackId(res.record.recordid);
             setAuthor(res.user.username);
-            this.startPlayer(res.record.filesid);
+            this.startPlayer(res.record.filesid, play);
         });
     }
 
-    startPlayer(file) {
+    startPlayer(file, play) {
       console.log("starting playback with file: " + file);
-      AudioPlayer.playUrl(file, () => {
-        this.clearClearInterval(true);
+      AudioPlayer.playUrl(file, play, () => {
+        this.clearClearInterval(play);
       });
     }
 
@@ -109,7 +114,7 @@ class Loop extends Component {
     finished = () => {
         this.state.liked = false;
         this.clearClearInterval(false);
-        this.getRandomTrack();
+        this.getRandomTrack(true);
     }
 
     play = () => {
