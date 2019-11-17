@@ -12,6 +12,11 @@ const uuidKey = 'POSITIVELOOP_USER_KEY';
 
 function createScreenTree() {
     Navigation.events().registerAppLaunchedListener(() => {
+        Navigation.setDefaultOptions({
+            layout: {
+                orientation: ['portrait']
+            }
+        });
         Navigation.setRoot({
             root: {
                 bottomTabs: {
@@ -19,7 +24,6 @@ function createScreenTree() {
                         bottomTabs: {
                             titleDisplayMode: 'alwaysShow',
                         },
-
                     },
                     children: [{
                         stack: {

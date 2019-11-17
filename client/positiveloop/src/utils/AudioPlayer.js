@@ -14,8 +14,8 @@ export default class AudioPlayer {
     }
 
     /**
-     * Play file straight from server 
-     * @param {string} trackId the audio file id on server 
+     * Play file straight from server
+     * @param {string} trackId the audio file id on server
      * @param {function} callBack when the player is started
      */
     static playUrl(trackId, callBack) {
@@ -136,7 +136,7 @@ export default class AudioPlayer {
       var process = () => {
         player = new Player(file, {
             continuesToPlayInBackground: false,
-            wakeLock: true,
+            wakeLock: false,
         });
         player.play(callBack);
       };
