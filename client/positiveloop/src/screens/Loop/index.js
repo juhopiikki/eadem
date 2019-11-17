@@ -72,12 +72,19 @@ class Loop extends Component {
     getProgress() {
         let progress = AudioPlayer.getProgress();
         if (progress == 0 && this.interval !== undefined) {
-            this.stop();
+            this.finished();
         }
         
         this.setState({
             progress: progress
         });
+    }
+
+    finished = () => {
+        if (this.interval !== undefined)
+            clearInterval(this.interval)
+        AudioPlayer.stop();
+        this.getRandomTrack();
     }
 
     play = () => {
