@@ -15,11 +15,11 @@ export default class AudioPlayer {
 
     /**
      * Play file straight from server 
-     * @param {string} fileId the audio file id on server 
+     * @param {string} trackId the audio file id on server 
      * @param {function} callBack when the player is started
      */
-    static playUrl(fileId, callBack) {
-        AudioPlayer.startPlayer("http://54.229.97.181:8080/mental/file/" + fileId, callBack);
+    static playUrl(trackId, callBack) {
+        AudioPlayer.startPlayer("http://54.229.97.181:8080/mental/file/" + trackId, callBack);
     }
 
     /**
@@ -61,10 +61,19 @@ export default class AudioPlayer {
     }
 
     /**
+     * Pauses playing the audio
+     * @param {function} callBack when the player is paused
+    */
+    static pause(callBack) {
+        if (player !== undefined)
+            player.pause(callBack);
+    }
+
+    /**
      * Stop playing the audio
      * @param {function} callBack when the player is stopped
     */
-    static stop() {
+    static stop(callBack) {
         if (player !== undefined && player.canStop)
             player.stop(callBack);
     }
