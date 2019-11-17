@@ -339,7 +339,7 @@ class Loop extends Component {
                                 icon={require('../../assets/images/next.png')}
                                 color={'black'}
                                 size={36}
-                                onPress={() => this.getRandomTrack()}
+                                onPress={() => this.finished()}
                             />
                             <Text style={[styles.tinyLabel, {
                                 bottom: -5
