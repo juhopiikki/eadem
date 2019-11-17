@@ -37,3 +37,17 @@ export const getMyRecords = (userId) => (dispatch) => {
         }
     );
 };
+
+// export const getUserDetails = (userId) => (dispatch) => {
+//     API.getUserById(
+//         userId,
+//         (res) => {
+//             console.log('API response for user details', res);
+//             if (res) {
+//
+//             } else {
+//
+//             }
+//         }
+//     );
+// };

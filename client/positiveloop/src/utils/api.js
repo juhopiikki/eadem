@@ -8,6 +8,31 @@ export default class API extends Component {
     super(props);
   }
 
+  static userNotAvailable(response) {
+    if (response
+        && response.headers
+        && response.headers.map
+        && response.headers.map['content-length'] === '0') {
+      // The user was not found on the API
+      return true
+    }
+    return false
+  }
+
+  static badRequest(response) {
+      return response.status !== 200
+  }
+
+  static parseResponse(response) {
+    if (this.badRequest(response)){
+      return Promise.resolve(null);
+    } else if (this.userNotAvailable(response)) {
+      return Promise.resolve(false);
+    } else {
+      return response.json()
+    }
+  }
+
   /**
    * Create new user.
    *
@@ -34,8 +59,8 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(res => res.json())
-      .then((result) => cb(result)).catch(() => console.log('API ERROR'));
+    }).then(response => this.parseResponse(response))
+      .then((result) => cb(result)).catch(() => console.log('createUser API ERROR'));
   }
 
   /**
@@ -63,8 +88,8 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
-      .then(cb).catch(() => console.log('API ERROR'));
+    }).then(response => this.parseResponse(response))
+      .then(cb).catch(() => console.log('getUserById API ERROR'));
   }
 
   /**
@@ -92,7 +117,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -121,7 +146,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -152,7 +177,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -175,7 +200,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -204,7 +229,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -235,7 +260,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -258,7 +283,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -287,7 +312,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -318,7 +343,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -341,7 +366,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
