@@ -37,7 +37,7 @@ export default class AudioPlayer {
      * @param {function} callBack containing if the audio was started
      */
     static play(callBack) {
-        if (player !== undefined && player.isPlaying && player.canPlay) {
+        if (player !== undefined && !player.isPlaying && player.canPlay) {
             player.play(callBack);
         }
     }
@@ -47,7 +47,7 @@ export default class AudioPlayer {
      * @param {function} callBack containing if the audio was paused
      */
     static pause(callBack) {
-        if (player !== undefined && player.isPaused) {
+        if (player !== undefined && !player.isPaused) {
             player.pause(callBack);
         }
     }
@@ -81,8 +81,8 @@ export default class AudioPlayer {
      * @returns {number} the current progress between [0, 1]
      */
     static getProgress() {
-        if (player.currentTime < 0 || player.duration <= 0)
-            return 0;
+        if (player === undefined || player.currentTime < 0 || player.duration <= 0)
+            return -1;
         return player.currentTime / player.duration;
     }
 
@@ -128,7 +128,7 @@ export default class AudioPlayer {
      * @param {function} callBack when the player is stopped
     */
     static stop(callBack) {
-        if (player !== undefined && player.canStop)
+        if (player !== undefined && player)
             player.stop(callBack);
     }
 
