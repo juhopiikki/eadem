@@ -67,6 +67,7 @@ class Me extends Component {
                                     recordAuthor={recordItem.user.username}
                                     about={recordItem.user.description}
                                     recordid={recordItem.record.recordid}
+                                    liked={recordItem.record.likecount}
                                 />
                             ))
                         }
