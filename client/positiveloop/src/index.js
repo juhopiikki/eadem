@@ -195,7 +195,7 @@ export async function initializeApp () {
                     "usersid":user
                 }, (resUserId) => {
                     API.getUserById(resUserId, (resUser) => {
-                        store.dispatch({type: 'SET_USER_NAME', payload: resUser.username})
+                        store.dispatch({type: 'SET_USER_NAME', payload: resUser.username});
                         store.dispatch({type: 'SET_USER_DESCRIPTION', payload: resUser.description})
                     })
                 });
