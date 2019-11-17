@@ -101,7 +101,6 @@ class Loop extends Component {
     finished = () => {
         if (this.interval !== undefined)
             clearInterval(this.interval)
-        AudioPlayer.stop();
         this.getRandomTrack();
     }
 

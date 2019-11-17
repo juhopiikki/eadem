@@ -128,7 +128,7 @@ export default class AudioPlayer {
      * @param {function} callBack when the player is stopped
     */
     static stop(callBack) {
-        if (player !== undefined && player)
+        if (player !== undefined && player.canStop)
             player.stop(callBack);
     }
 
