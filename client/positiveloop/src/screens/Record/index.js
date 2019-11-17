@@ -76,6 +76,8 @@ export default Record = () => {
     const shareRecording = async () => {
       const userId = await getUserKey();
       API.uploadAudio(recordFileId, (fileId) => API.createRecord({ usersid: userId, "filesid": fileId, title: title }, () => console.log("Record created")));
+      setTitle('')
+      restartRecording()
     }
 
     return (
