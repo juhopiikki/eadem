@@ -1,5 +1,10 @@
 import API from '../utils/api'
-import { getUserKey, updateUserDescription } from '../index'
+import { getUserKey } from '../index'
+
+export const setCurrentTrackId = (trackId) => (dispatch) => {
+    console.log("TARCK: ", trackId)
+    dispatch({type: 'SET_CURRENT_TRACK_ID', payload: trackId});
+};
 
 export const clearTrackDetails = () => (dispatch) => {
     dispatch({type: 'RESET_TRACK_DETAILS'});
@@ -28,6 +33,16 @@ export const getSavedRecords = (userId) => (dispatch) => {
     );
 };
 
+/*export const getRandomRecord = () => (dispatch) => {
+    API.getSavedRecords(
+        (res) => {
+            console.log('API response for saved records', res);
+            if (Array.isArray(res) && res.length > 0) dispatch({type: '***********', payload: res});
+            else dispatch({type: '************', payload: []});
+        }
+    );
+};*/
+
 export const getMyRecords = (userId) => (dispatch) => {
     API.getUserRecords(
         userId,
@@ -40,34 +55,30 @@ export const getMyRecords = (userId) => (dispatch) => {
 };
 
 export const setUserName = (userName) => async(dispatch) => {
-    try {
-        const userId = await getUserKey();
-        console.log("Updating username to backend, userId: " + userId)
         dispatch({type: 'SET_USER_NAME', payload: userName});
-        API.updateUserName({
+};
+
+export async function sendUserNameToAPI (userName) {
+    const userId = await getUserKey();
+    API.updateUserName({
             "usersid": userId,
             "username": userName
         },
-            (res) => console.log(res)
-        );
-    } catch (e) {
-        console.log(e);
-    }
-};
+        (res) => console.log('sendUserName', res)
+    )
+}
 
 export const setUserDescription = (description) => async(dispatch) => {
-    try {
-        const userId = await getUserKey();
-        console.log("Updating user description to backend, userId: " + userId)
         dispatch({type: 'SET_USER_DESCRIPTION', payload: description});
-        API.updateUserDescription({
+};
+
+export async function sendUserDescriptionToAPI (description) {
+    const userId = await getUserKey();
+    API.updateUserDescription({
             "usersid": userId,
             "description": description
         },
-            (res) => console.log(res)
-        );
-    } catch (e) {
-        console.log(e);
-    }
+        (res) => console.log(res)
+    );
+}
 
-};

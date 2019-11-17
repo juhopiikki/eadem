@@ -9,6 +9,31 @@ export default class API extends Component {
     super(props);
   }
 
+  static userNotAvailable(response) {
+    if (response
+        && response.headers
+        && response.headers.map
+        && response.headers.map['content-length'] === '0') {
+      // The user was not found on the API
+      return true
+    }
+    return false
+  }
+
+  static badRequest(response) {
+      return response.status !== 200
+  }
+
+  static parseResponse(response) {
+    if (this.badRequest(response)){
+      return Promise.resolve(null);
+    } else if (this.userNotAvailable(response)) {
+      return Promise.resolve(false);
+    } else {
+      return response.json()
+    }
+  }
+
   /**
    * Create new user.
    *
@@ -35,8 +60,8 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(res => res.json())
-      .then((result) => cb(result)).catch(() => console.log('API ERROR'));
+    }).then(response => this.parseResponse(response))
+      .then((result) => cb(result)).catch(() => console.log('createUser API ERROR'));
   }
 
   /**
@@ -64,8 +89,8 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
-      .then(cb).catch(() => console.log('API ERROR'));
+    }).then(response => this.parseResponse(response))
+      .then(cb).catch(() => console.log('getUserById API ERROR'));
   }
 
   /**
@@ -93,7 +118,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -122,7 +147,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -153,7 +178,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -176,7 +201,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -205,7 +230,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -236,7 +261,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -259,7 +284,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -288,7 +313,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -319,7 +344,7 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
@@ -342,22 +367,20 @@ export default class API extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(input),
-    }).then(response => response.json())
+    }).then(response => this.parseResponse(response))
       .then(cb).catch(() => console.log('API ERROR'));
   }
 
   /**
    * Upload audio recording
    * * */
-  static uploadudio(uri, fileName, cb) {
+  static uploadAudio(uri, cb) {
     var file = {
       name: 'audiofile',
       filename: 'audiofile',
       data: RNFetchBlob.wrap(uri)
     };
-
-    // let formdata = new FormData();
-    // formdata.append("audiofile", file);
+    
     RNFetchBlob.fetch('POST', API_ENDPOINTS + '/file/upload', {
       'Content-Type': "multipart/form-data",
     }, [
@@ -365,8 +388,35 @@ export default class API extends Component {
     ])
       .then((response) => cb(response.data))
       .catch((err) => {
-        console.log('Error in adding a comment' + err);
+        console.log('Error in uploading audio' + err);
       })
   }
-}
 
+  /**
+   * Get random record
+   * 
+Return example:
+{
+    "record": {
+        "recordid": "19cc100a-b2cc-46d5-a77d-2853980d23ee",
+        "usersid": "2f386f7c-45ab-4abb-a350-360574a46fde",
+        "filesid": "5f59bbe7-8483-43ce-b169-cf0f651696c5",
+        "likecount": 0,
+        "title": "Oikeaa ääntä"
+    },
+    "user": {
+        "usersid": "2f386f7c-45ab-4abb-a350-360574a46fde",
+        "username": "Seppo",
+        "location": "Jauza",
+        "description": "Life is supposed to be fun"
+    }
+}
+   * 
+   * * */
+  static getRandomRecord(cb) {
+    fetch(API_ENDPOINTS + '/random/record', {
+      method: 'GET'
+    }).then(response => response.json())
+      .then(cb).catch(() => console.log('API ERROR'));
+  }
+}

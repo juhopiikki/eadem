@@ -5,14 +5,10 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from "../../assets/colors";
 import RecordItem from '../../components/RecordItem'
-import { setUserName, setUserDescription } from '../../store/actions'
+import {setUserName, setUserDescription, sendUserNameToAPI, sendUserDescriptionToAPI} from '../../store/actions'
+import API from '../../utils/api'
 
 const Me = (props) => {
-    const [userName, onChangeUserName] = React.useState(props.userName);
-    const [description, onChangeDesc] = React.useState(props.userdescription);
-    const setUserNameToRedux = props.setUserName
-    const setUserDescriptionToRedux = props.setUserDescription
-
     return (
         <View style={styles.main}>
             <KeyboardAwareScrollView contentContainerStyle={{ paddingTop: 10, paddingBottom: 80 }} keyboardShouldPersistTaps='handled'>
@@ -27,19 +23,20 @@ const Me = (props) => {
                             Name
                         </Text>
                         <TextInput underlineColorAndroid="transparent" style={styles.input}
-                          onChangeText={text => onChangeUserName(text)}
-                          value={userName}
-                          onBlur={() => setUserNameToRedux(userName) }
+                          onChangeText={text => props.setUserName(text)}
+                          value={props.userName}
+                          onBlur={() =>  sendUserNameToAPI(props.userName)
+                          }
                         />
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.inputTitle}>
                             Little something about me
                         </Text>
-                        <TextInput underlineColorAndroid="transparent" style={styles.input} 
-                          onChangeText={text => onChangeDesc(text)}
-                          value={description}
-                          onBlur={() => setUserDescriptionToRedux(description) }
+                        <TextInput underlineColorAndroid="transparent" style={styles.input}
+                          onChangeText={text => props.setUserDescription(text)}
+                          value={props.userdescription}
+                          onBlur={() => sendUserDescriptionToAPI(props.userdescription)}
                         />
                     </View>
                 </View>
@@ -49,8 +46,17 @@ const Me = (props) => {
                             My Shared Recordings
                         </Text>
                     </View>
-                    <RecordItem recordName="Positive Vibes" recordAuthor="Anonymous" />
-                    <RecordItem recordName="Best day of my life" recordAuthor="Anonymous" />
+                    {
+                        props.myRecords.map((recordItem) => (
+                            <RecordItem 
+                                key={recordItem.record.recordid} 
+                                recordName={recordItem.record.title} 
+                                recordAuthor={recordItem.user.username} 
+                                about={recordItem.user.description}
+                                recordid={recordItem.record.recordid}
+                        />
+                        ))
+                    }
                 </View>
             </KeyboardAwareScrollView>
         </View>
@@ -60,6 +66,7 @@ const Me = (props) => {
 const mapStateToProps = state => ({
   userName: state.userName,
   userdescription: state.userdescription,
+  myRecords: state.myRecords,
 });
 
 export default connect(mapStateToProps, { setUserName, setUserDescription })(Me);
@@ -72,7 +79,7 @@ const styles = StyleSheet.create({
     row: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: "flex-start", 
+        alignItems: "flex-start",
         marginBottom: 40,
     },
     info: {
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         height: 40,
         width: '100%',
-        borderBottomColor: '#000000', 
+        borderBottomColor: '#000000',
         borderBottomWidth: 1,
         backgroundColor: colors.backgroundColor,
         paddingLeft: 0,
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     titleRow: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: "center", 
+        alignItems: "center",
         marginBottom: 20,
     },
     title: {

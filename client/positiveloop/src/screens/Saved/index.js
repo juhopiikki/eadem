@@ -22,7 +22,13 @@ const Saved = (props) => {
                     </View>
                     {
                         props.savedRecords.map((recordItem) => (
-                            <RecordItem key={recordItem.record.recordid} recordName={recordItem.record.title} recordAuthor={recordItem.user.username} />
+                            <RecordItem 
+                                key={recordItem.record.recordid} 
+                                recordName={recordItem.record.title} 
+                                recordAuthor={recordItem.user.username} 
+                                about={recordItem.user.description}
+                                recordid={recordItem.record.recordid}
+                        />
                         ))
                     }
                 </View>

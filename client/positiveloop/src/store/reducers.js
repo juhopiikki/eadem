@@ -7,8 +7,7 @@ const initialState = {
     myRecords: [],
     savedAudioIds: [],
     favoriteAudioIds: [],
-    userName: 'Seppo',
-    userId: '',
+    userName: 'Anonymous',
     userdescription: 'Life is supposed to be fun',
 }
 
@@ -44,7 +43,7 @@ function appReducer(state = initialState, action) {
                 ...state,
                 myRecords: action.payload,
             };
-        case 'SET_USERNAME':
+        case 'SET_USER_NAME':
             return {
                 ...state,
                 userName: action.payload,

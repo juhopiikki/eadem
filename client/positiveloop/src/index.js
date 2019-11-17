@@ -6,6 +6,7 @@ import registerScreens from './screens';
 import colors from './assets/colors';
 import {getMyRecords, getSavedRecords} from "./store/actions";
 import store from './store/store'
+import API from './utils/api'
 
 const uuidKey = 'POSITIVELOOP_USER_KEY';
 
@@ -181,6 +182,29 @@ export async function initializeApp () {
     registerScreens();
     createScreenTree();
     const user = await getUserKey();
+    // const user = "d97b8baa-b626-4615-b162-fa6687887bfa"
+    API.getUserById(
+        user,
+        (res) => {
+            console.log('API:', res);
+            if (res === null){
+               // all bad :(
+            } else if (res === false){
+                // No user, create a new one.
+                API.createUser({
+                    "usersid":user
+                }, (resUserId) => {
+                    API.getUserById(resUserId, (resUser) => {
+                        store.dispatch({type: 'SET_USER_NAME', payload: resUser.username});
+                        store.dispatch({type: 'SET_USER_DESCRIPTION', payload: resUser.description})
+                    })
+                });
+            } else {
+                store.dispatch({type: 'SET_USER_NAME', payload: res.username})
+                store.dispatch({type: 'SET_USER_DESCRIPTION', payload: res.description})
+            }
+        }
+    );
     store.dispatch(getSavedRecords(user));
     store.dispatch(getMyRecords(user));
 }
