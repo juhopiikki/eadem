@@ -82,7 +82,7 @@ export default class AudioPlayer {
      */
     static getProgress() {
         if (player === undefined || player.currentTime < 0 || player.duration <= 0)
-            return 0;
+            return -1;
         return player.currentTime / player.duration;
     }
 
