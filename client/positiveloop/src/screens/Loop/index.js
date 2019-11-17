@@ -7,9 +7,10 @@ import {
     Image
 } from 'react-native';
 import { ProgressBar, IconButton, TouchableRipple } from 'react-native-paper';
-import { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor } from "../../store/actions";
+import { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor, getMyRecords } from "../../store/actions";
 import API from '../../utils/api'
 import AudioPlayer from '../../utils/AudioPlayer';
+import { getUserKey } from '../../index'
 
 class Loop extends Component {
     state = {
@@ -57,11 +58,11 @@ class Loop extends Component {
             setCurrentAuthor: setAuthor
          } = this.props;
         API.getRandomRecord((res) => {
-            this.startPlayer(res.record.filesid);
             setTitle(res.record.title);
             setAbout(res.user.description);
             setTrackId(res.record.recordid);
             setAuthor(res.user.username);
+            this.startPlayer(res.record.filesid);
         });
     }
 
@@ -72,6 +73,22 @@ class Loop extends Component {
         this.setState({
             playing: true
         })
+    }
+
+    saveRecord = async() => {
+        const { 
+            getMyRecords: getRecords
+         } = this.props;
+        const userkey = await getUserKey();
+        const { trackId } = this.props;
+        API.saveRecord({
+                "usersid":userkey,
+                "recordid":trackId
+            },
+            (sts) => console.log("return: ", sts)
+          );
+        console.log("saved record: " + trackId);
+        getRecords(userkey);
     }
 
     getProgress() {
@@ -285,7 +302,7 @@ class Loop extends Component {
                                 icon={require('../../assets/images/save.png')}
                                 color={'black'}
                                 size={36}
-                                onPress={() => getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
+                                onPress={() => this.saveRecord() } // getSaved('fbc05fb3-6504-45c4-b8fc-f1d0b574550a')}
                             />
                             <Text style={[styles.tinyLabel, {
                                 bottom: -5
@@ -388,7 +405,7 @@ const mapStateToProps = state => ({
     title: state.currentTitle,
 });
 
-export default connect(mapStateToProps, { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor })(Loop);
+export default connect(mapStateToProps, { getSavedRecords, setCurrentTitle, setCurrentAbout, setCurrentTrackId, setCurrentAuthor, getMyRecords })(Loop);
 
 const styles = StyleSheet.create({
     titleText: {
